@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:project/screens/Donation/dashboard.dart';
 // import 'package:project/screens/Beneficary/dashboard.dart';
-// import 'package:project/screens/Donor/dashboard.dart';
+import 'package:project/screens/Donor/dashboard.dart';
 // import 'package:project/screens/Volunteer/dashboard.dart';
 
 import 'package:project/screens/Authentication/login_register_page.dart';
@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const DonationHomePage()));
+                        builder: (context) => const DonorHomePage()));
               },
               child: const Text('Doner'),
               color: Colors.blue,
