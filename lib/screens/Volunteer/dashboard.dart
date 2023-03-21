@@ -31,7 +31,7 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'Volunteer Dashboard',
+              'Volunteers Dashboard',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
@@ -46,7 +46,6 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
               height: 300,
               image: NetworkImage(
                   'https://img.freepik.com/free-vector/people-volunteering-donating-money_53876-66112.jpg'),
-              // AssetImage('dash/volunteer.jpg'),
             ),
             const SizedBox(
               height: 60,
@@ -58,11 +57,11 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
                     MaterialPageRoute(
                         builder: (context) => const InsertData()));
               },
-              child: const Text('Insert Volunteer Details'),
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
               height: 40,
+              child: const Text('Insert Volunteer Details'),
             ),
             const SizedBox(
               height: 30,
@@ -72,11 +71,11 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const FetchData()));
               },
-              child: const Text('View Volunteer Details'),
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
               height: 40,
+              child: const Text('View Volunteer Details'),
             ),
           ],
         ),
