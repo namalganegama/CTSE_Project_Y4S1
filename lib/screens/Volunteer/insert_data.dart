@@ -49,7 +49,7 @@ class _InsertDataState extends State<InsertData> {
           child: Column(
             children: [
               const Text(
-                'Insert Volunteer Details',
+                'Register as a New Volunteer',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w500,
@@ -69,7 +69,7 @@ class _InsertDataState extends State<InsertData> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This Field Cannot be Empty";
                   } else {
                     return null;
                   }
@@ -88,7 +88,7 @@ class _InsertDataState extends State<InsertData> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This Field Cannot be Empty";
                   } else {
                     return null;
                   }
@@ -107,7 +107,9 @@ class _InsertDataState extends State<InsertData> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This Field Cannot be Empty";
+                  } else if (!value.contains('@')) {
+                    return "This Field Must be an Email";
                   } else {
                     return null;
                   }
@@ -126,7 +128,9 @@ class _InsertDataState extends State<InsertData> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This Field Cannot be Empty";
+                  } else if (value.length != 10) {
+                    return "NIC Must Contain 10 Digits";
                   } else {
                     return null;
                   }
@@ -143,6 +147,15 @@ class _InsertDataState extends State<InsertData> {
                   labelText: 'Volunteer Phone Number',
                   hintText: 'Enter Volunteer Phone Number',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This Field Cannot be Empty";
+                  } else if (value.length != 10) {
+                    return "Phone Number Must Contain 10 Digits";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
@@ -187,21 +200,21 @@ class _InsertDataState extends State<InsertData> {
                                     builder: (context) => VolunteerHomePage()),
                               );
                             },
-                            child: Text('Yes'),
+                            child: const Text('Yes'),
                           ),
                         ],
                         title: const Text('Alert'),
                         contentPadding: const EdgeInsets.all(20.0),
-                        content: const Text('Do You Want To Insert Data ?'),
+                        content: const Text('Do You Want to Insert Data ?'),
                       ),
                     );
                   }
                 },
-                child: const Text('Insert Data'),
                 color: Colors.blue,
                 textColor: Colors.white,
                 minWidth: 300,
                 height: 40,
+                child: const Text('Register'),
               ),
             ],
           ),
