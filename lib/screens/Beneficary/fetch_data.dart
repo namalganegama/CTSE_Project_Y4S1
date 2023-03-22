@@ -17,6 +17,16 @@ class _FetchDataState extends State<FetchData> {
   DatabaseReference reference =
       FirebaseDatabase.instance.ref().child('Beneficaries');
 
+  final TextEditingController _searchController = TextEditingController();
+  late Query _searchQuery;
+  List<Map> _searchResults = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _searchQuery = dbRef;
+  }
+
   Widget listItem({required Map beneficary}) {
     return Container(
       margin: const EdgeInsets.all(10),
@@ -138,29 +148,78 @@ class _FetchDataState extends State<FetchData> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: GestureDetector(
-            onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-              )
-            },
-            child: const Text('Helping Hands'),
-          ),
+      appBar: AppBar(
+        title: GestureDetector(
+          onTap: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            )
+          },
+          child: const Text('Helping Hands'),
         ),
-        body: Container(
-          height: double.infinity,
-          child: FirebaseAnimatedList(
-            query: dbRef,
-            itemBuilder: (BuildContext context, DataSnapshot snapshot,
-                Animation<double> animation, int index) {
-              Map beneficary = snapshot.value as Map;
-              beneficary['key'] = snapshot.key;
-
-              return listItem(beneficary: beneficary);
-            },
-          ),
-        ));
+      ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: TextField(
+                controller: _searchController,
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.all(10),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.black,
+                    size: 20,
+                  ),
+                  prefixIconConstraints:
+                      BoxConstraints(maxHeight: 20, minWidth: 25),
+                  hintText: "Search beneficary By Item Name",
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _searchResults = [];
+                    if (value.isNotEmpty) {
+                      _searchQuery = dbRef
+                          .orderByChild('Beneficary_Name')
+                          .startAt(value.toLowerCase())
+                          .endAt(value.toLowerCase());
+                    } else {
+                      _searchQuery = dbRef;
+                    }
+                  });
+                },
+              ),
+            ),
+            Expanded(
+              child: FirebaseAnimatedList(
+                query: _searchQuery,
+                itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                    Animation<double> animation, int index) {
+                  Map beneficary = snapshot.value as Map;
+                  beneficary['key'] = snapshot.key;
+                  if (_searchController.text.isNotEmpty &&
+                      !beneficary['Beneficary_Name']
+                          .toLowerCase()
+                          .contains(_searchController.text.toLowerCase())) {
+                    return Container();
+                  }
+                  // Add the filtered volunteer to the search results list
+                  _searchResults.add(beneficary);
+                  return listItem(beneficary: beneficary);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

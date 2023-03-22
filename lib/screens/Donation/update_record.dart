@@ -4,16 +4,17 @@ import 'package:project/screens/Donation/fetch_data.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/screens/Authentication/home_page.dart';
 
-class UpdateRecord extends StatefulWidget {
-  const UpdateRecord({Key? key, required this.donationKey}) : super(key: key);
+class UpdateDonationData extends StatefulWidget {
+  const UpdateDonationData({Key? key, required this.donationKey})
+      : super(key: key);
 
   final String donationKey;
 
   @override
-  State<UpdateRecord> createState() => _UpdateRecordState();
+  State<UpdateDonationData> createState() => _UpdateDonationDataState();
 }
 
-class _UpdateRecordState extends State<UpdateRecord> {
+class _UpdateDonationDataState extends State<UpdateDonationData> {
   final itemNameController = TextEditingController();
   final itemTypeController = TextEditingController();
   final dateController = TextEditingController();
@@ -170,7 +171,7 @@ class _UpdateRecordState extends State<UpdateRecord> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => FetchData()),
+                                  builder: (context) => FetchDonationData()),
                             );
                           },
                           child: Text('Yes'),
