@@ -217,7 +217,8 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => FetchVolunteer()),
+                                    builder: (context) =>
+                                        const FetchVolunteer()),
                               );
                             },
                             child: const Text('Yes'),
@@ -230,11 +231,11 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                     );
                   }
                 },
-                child: const Text('Update Data'),
                 color: Colors.blue,
                 textColor: Colors.white,
                 minWidth: 300,
                 height: 40,
+                child: const Text('Update Data'),
               ),
             ],
           ),
