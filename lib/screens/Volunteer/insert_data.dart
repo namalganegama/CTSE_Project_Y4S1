@@ -1,30 +1,28 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:project/screens/Donation/dashboard.dart';
+import 'package:project/screens/Volunteer/dashboard.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/screens/Authentication/home_page.dart';
-import 'package:intl/intl.dart';
 
-class InsertDonationData extends StatefulWidget {
-  const InsertDonationData({Key? key}) : super(key: key);
+class InsertVolunteer extends StatefulWidget {
+  const InsertVolunteer({Key? key}) : super(key: key);
 
   @override
-  State<InsertDonationData> createState() => _InsertDonationDataState();
+  State<InsertVolunteer> createState() => _InsertVolunteerState();
 }
 
-class _InsertDonationDataState extends State<InsertDonationData> {
-  final itemNameController = TextEditingController();
-  final itemTypeController = TextEditingController();
-  final dateController = TextEditingController();
-  final amountController = TextEditingController();
-  final descriptionController = TextEditingController();
-
+class _InsertVolunteerState extends State<InsertVolunteer> {
+  final nameController = TextEditingController();
+  final addressController = TextEditingController();
+  final emailController = TextEditingController();
+  final nicController = TextEditingController();
+  final phoneController = TextEditingController();
   late DatabaseReference dbRef;
 
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('Donations');
+    dbRef = FirebaseDatabase.instance.ref().child('Volunteers');
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -47,11 +45,11 @@ class _InsertDonationDataState extends State<InsertDonationData> {
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               const Text(
-                'Insert Donation Details',
+                'Register as a New Volunteer',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w500,
@@ -62,16 +60,16 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 height: 30,
               ),
               TextFormField(
-                controller: itemNameController,
+                controller: nameController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Name',
-                  hintText: 'Enter Item Name',
+                  labelText: 'Volunteer Name',
+                  hintText: 'Enter Volunteer Name',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This Field Cannot be Empty";
                   } else {
                     return null;
                   }
@@ -81,16 +79,16 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 height: 30,
               ),
               TextFormField(
-                controller: itemTypeController,
+                controller: addressController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Type',
-                  hintText: 'Enter Item Type',
+                  labelText: 'Volunteer Address',
+                  hintText: 'Enter Volunteer Address',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This Field Cannot be Empty";
                   } else {
                     return null;
                   }
@@ -100,30 +98,18 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 height: 30,
               ),
               TextFormField(
-                controller: dateController,
-                keyboardType: TextInputType.text,
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Donation Date',
-                  hintText: 'Enter Donation Date',
+                  labelText: 'Volunteer Email',
+                  hintText: 'Enter Volunteer Email',
                 ),
-                onTap: () async {
-                  DateTime? pickeddate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2101));
-
-                  if (pickeddate != null) {
-                    setState(() {
-                      dateController.text =
-                          DateFormat('yyyy-MM-dd').format(pickeddate);
-                    });
-                  }
-                },
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This Field Cannot be Empty";
+                  } else if (!value.contains('@')) {
+                    return "This Field Must be an Email";
                   } else {
                     return null;
                   }
@@ -133,16 +119,18 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 height: 30,
               ),
               TextFormField(
-                controller: amountController,
+                controller: nicController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Amount',
-                  hintText: 'Enter Item Amount',
+                  labelText: 'Volunteer NIC',
+                  hintText: 'Enter Volunteer NIC',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This Field Cannot be Empty";
+                  } else if (value.length != 10) {
+                    return "NIC Must Contain 10 Digits";
                   } else {
                     return null;
                   }
@@ -152,13 +140,22 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 height: 30,
               ),
               TextFormField(
-                controller: descriptionController,
-                keyboardType: TextInputType.text,
+                controller: phoneController,
+                keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Description',
-                  hintText: 'Enter Item Description',
+                  labelText: 'Volunteer Phone Number',
+                  hintText: 'Enter Volunteer Phone Number',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This Field Cannot be Empty";
+                  } else if (value.length != 10) {
+                    return "Phone Number Must Contain 10 Digits";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
@@ -166,12 +163,12 @@ class _InsertDonationDataState extends State<InsertDonationData> {
               MaterialButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    Map<String, String> donations = {
-                      'Item_Name': itemNameController.text,
-                      'Item_Type': itemTypeController.text,
-                      'Date': dateController.text,
-                      'Amount': amountController.text,
-                      'Description': descriptionController.text
+                    Map<String, String> volunteers = {
+                      'Volunteer_Name': nameController.text,
+                      'Volunteer_Address': addressController.text,
+                      'Volunteer_Email': emailController.text,
+                      'Volunteer_Nic': nicController.text,
+                      'Volunteer_Phone': phoneController.text,
                     };
 
                     showDialog(
@@ -186,7 +183,7 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                           ),
                           TextButton(
                             onPressed: () {
-                              dbRef.push().set(donations);
+                              dbRef.push().set(volunteers);
 
                               Fluttertoast.showToast(
                                 msg: "Data Added Successfully!",
@@ -200,24 +197,25 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DonationHomePage()),
+                                    builder: (context) =>
+                                        const VolunteerHomePage()),
                               );
                             },
-                            child: Text('Yes'),
+                            child: const Text('Yes'),
                           ),
                         ],
                         title: const Text('Alert'),
                         contentPadding: const EdgeInsets.all(20.0),
-                        content: const Text('Do You Want To Insert Data ?'),
+                        content: const Text('Do You Want to Insert Data ?'),
                       ),
                     );
                   }
                 },
-                child: const Text('Insert Data'),
                 color: Colors.blue,
                 textColor: Colors.white,
                 minWidth: 300,
                 height: 40,
+                child: const Text('Register Data'),
               ),
             ],
           ),

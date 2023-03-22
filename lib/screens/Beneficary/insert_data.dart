@@ -1,22 +1,21 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:project/screens/Donation/dashboard.dart';
+import 'package:project/screens/Beneficary/dashboard.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/screens/Authentication/home_page.dart';
-import 'package:intl/intl.dart';
 
-class InsertDonationData extends StatefulWidget {
-  const InsertDonationData({Key? key}) : super(key: key);
+class InsertData extends StatefulWidget {
+  const InsertData({Key? key}) : super(key: key);
 
   @override
-  State<InsertDonationData> createState() => _InsertDonationDataState();
+  State<InsertData> createState() => _InsertDataState();
 }
 
-class _InsertDonationDataState extends State<InsertDonationData> {
-  final itemNameController = TextEditingController();
-  final itemTypeController = TextEditingController();
-  final dateController = TextEditingController();
-  final amountController = TextEditingController();
+class _InsertDataState extends State<InsertData> {
+  final nameController = TextEditingController();
+  final addressController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
   final descriptionController = TextEditingController();
 
   late DatabaseReference dbRef;
@@ -24,7 +23,7 @@ class _InsertDonationDataState extends State<InsertDonationData> {
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('Donations');
+    dbRef = FirebaseDatabase.instance.ref().child('Beneficaries');
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -51,7 +50,7 @@ class _InsertDonationDataState extends State<InsertDonationData> {
           child: Column(
             children: [
               const Text(
-                'Insert Donation Details',
+                'Insert Beneficary Details',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w500,
@@ -62,12 +61,12 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 height: 30,
               ),
               TextFormField(
-                controller: itemNameController,
+                controller: nameController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Name',
-                  hintText: 'Enter Item Name',
+                  labelText: 'Beneficary Name',
+                  hintText: 'Enter Beneficary Name',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -81,12 +80,12 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 height: 30,
               ),
               TextFormField(
-                controller: itemTypeController,
+                controller: addressController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Type',
-                  hintText: 'Enter Item Type',
+                  labelText: 'Beneficary Address',
+                  hintText: 'Enter Beneficary Address',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -100,27 +99,13 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 height: 30,
               ),
               TextFormField(
-                controller: dateController,
+                controller: emailController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Donation Date',
-                  hintText: 'Enter Donation Date',
+                  labelText: 'Beneficary Email Address',
+                  hintText: 'Enter Beneficary Email',
                 ),
-                onTap: () async {
-                  DateTime? pickeddate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2101));
-
-                  if (pickeddate != null) {
-                    setState(() {
-                      dateController.text =
-                          DateFormat('yyyy-MM-dd').format(pickeddate);
-                    });
-                  }
-                },
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "This Field Cannot be empty";
@@ -133,12 +118,12 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 height: 30,
               ),
               TextFormField(
-                controller: amountController,
+                controller: phoneController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Amount',
-                  hintText: 'Enter Item Amount',
+                  labelText: 'Beneficary Phone Number',
+                  hintText: 'Enter Beneficary Phone',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -156,8 +141,8 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Description',
-                  hintText: 'Enter Item Description',
+                  labelText: 'Beneficary Description',
+                  hintText: 'Enter Beneficary Description',
                 ),
               ),
               const SizedBox(
@@ -166,12 +151,12 @@ class _InsertDonationDataState extends State<InsertDonationData> {
               MaterialButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    Map<String, String> donations = {
-                      'Item_Name': itemNameController.text,
-                      'Item_Type': itemTypeController.text,
-                      'Date': dateController.text,
-                      'Amount': amountController.text,
-                      'Description': descriptionController.text
+                    Map<String, String> beneficaries = {
+                      'Beneficary_Name': nameController.text,
+                      'Beneficary_Address': addressController.text,
+                      'Beneficary_Email': emailController.text,
+                      'Beneficary_Phone': phoneController.text,
+                      'Beneficary_Description': descriptionController.text
                     };
 
                     showDialog(
@@ -186,7 +171,7 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                           ),
                           TextButton(
                             onPressed: () {
-                              dbRef.push().set(donations);
+                              dbRef.push().set(beneficaries);
 
                               Fluttertoast.showToast(
                                 msg: "Data Added Successfully!",
@@ -200,7 +185,7 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DonationHomePage()),
+                                    builder: (context) => BeneficaryHomePage()),
                               );
                             },
                             child: Text('Yes'),
