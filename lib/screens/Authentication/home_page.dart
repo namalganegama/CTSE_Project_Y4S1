@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project/screens/Authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:project/screens/Beneficary/dashboard.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:project/screens/Donation/dashboard.dart';
 // import 'package:project/screens/Beneficary/dashboard.dart';
@@ -165,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const DonationHomePage()));
+                        builder: (context) => const BeneficaryHomePage()));
               },
               child: const Text('Beneficary'),
               color: Colors.blue,
