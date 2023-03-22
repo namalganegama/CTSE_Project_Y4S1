@@ -5,14 +5,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/screens/Authentication/home_page.dart';
 import 'package:intl/intl.dart';
 
-class InsertData extends StatefulWidget {
-  const InsertData({Key? key}) : super(key: key);
+class InsertDonationData extends StatefulWidget {
+  const InsertDonationData({Key? key}) : super(key: key);
 
   @override
-  State<InsertData> createState() => _InsertDataState();
+  State<InsertDonationData> createState() => _InsertDonationDataState();
 }
 
-class _InsertDataState extends State<InsertData> {
+class _InsertDonationDataState extends State<InsertDonationData> {
   final itemNameController = TextEditingController();
   final itemTypeController = TextEditingController();
   final dateController = TextEditingController();
