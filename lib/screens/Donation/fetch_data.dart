@@ -5,14 +5,14 @@ import 'package:project/screens/Donation/update_record.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/screens/Authentication/home_page.dart';
 
-class FetchData extends StatefulWidget {
-  const FetchData({Key? key}) : super(key: key);
+class FetchDonationData extends StatefulWidget {
+  const FetchDonationData({Key? key}) : super(key: key);
 
   @override
-  State<FetchData> createState() => _FetchDataState();
+  State<FetchDonationData> createState() => _FetchDonationDataState();
 }
 
-class _FetchDataState extends State<FetchData> {
+class _FetchDonationDataState extends State<FetchDonationData> {
   Query dbRef = FirebaseDatabase.instance.ref().child('Donations');
   DatabaseReference reference =
       FirebaseDatabase.instance.ref().child('Donations');
@@ -78,8 +78,8 @@ class _FetchDataState extends State<FetchData> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) =>
-                              UpdateRecord(donationKey: donation['key'])));
+                          builder: (_) => UpdateDonationData(
+                              donationKey: donation['key'])));
                 },
                 child: Row(
                   children: [

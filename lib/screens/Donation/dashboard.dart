@@ -56,7 +56,7 @@ class _DonationHomePageState extends State<DonationHomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const InsertData()));
+                        builder: (context) => const InsertDonationData()));
               },
               child: const Text('Insert Donation Details'),
               color: Colors.blue,
@@ -69,8 +69,10 @@ class _DonationHomePageState extends State<DonationHomePage> {
             ),
             MaterialButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const FetchData()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FetchDonationData()));
               },
               child: const Text('View Donation Details'),
               color: Colors.blue,
