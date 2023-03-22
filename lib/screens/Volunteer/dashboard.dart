@@ -55,7 +55,7 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const InsertData()));
+                        builder: (context) => const InsertVolunteer()));
               },
               color: Colors.blue,
               textColor: Colors.white,
@@ -68,8 +68,10 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
             ),
             MaterialButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const FetchData()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FetchVolunteer()));
               },
               color: Colors.blue,
               textColor: Colors.white,

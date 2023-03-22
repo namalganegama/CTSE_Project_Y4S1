@@ -4,14 +4,14 @@ import 'package:project/screens/Volunteer/dashboard.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/screens/Authentication/home_page.dart';
 
-class InsertData extends StatefulWidget {
-  const InsertData({Key? key}) : super(key: key);
+class InsertVolunteer extends StatefulWidget {
+  const InsertVolunteer({Key? key}) : super(key: key);
 
   @override
-  State<InsertData> createState() => _InsertDataState();
+  State<InsertVolunteer> createState() => _InsertVolunteerState();
 }
 
-class _InsertDataState extends State<InsertData> {
+class _InsertVolunteerState extends State<InsertVolunteer> {
   final nameController = TextEditingController();
   final addressController = TextEditingController();
   final emailController = TextEditingController();
@@ -45,7 +45,7 @@ class _InsertDataState extends State<InsertData> {
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               const Text(
@@ -197,7 +197,7 @@ class _InsertDataState extends State<InsertData> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => VolunteerHomePage()),
+                                    builder: (context) => const VolunteerHomePage()),
                               );
                             },
                             child: const Text('Yes'),
