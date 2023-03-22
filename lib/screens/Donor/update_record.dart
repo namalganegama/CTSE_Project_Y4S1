@@ -40,6 +40,8 @@ class _UpdateRecordState extends State<UpdateRecord> {
     phoneController.text = item['Donor_Phone'];
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +57,8 @@ class _UpdateRecordState extends State<UpdateRecord> {
           child: const Text('Helping Hands'),
         ),
       ),
-      body: Center(
+      body: Form(
+        key: _formKey,
         child: Padding(
           padding: EdgeInsets.all(8.0),
           child: Column(
@@ -74,7 +77,7 @@ class _UpdateRecordState extends State<UpdateRecord> {
               const SizedBox(
                 height: 30,
               ),
-              TextField(
+              TextFormField(
                 controller: nameController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
@@ -82,11 +85,18 @@ class _UpdateRecordState extends State<UpdateRecord> {
                   labelText: 'Donor Name',
                   hintText: 'Enter Donor Name',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This field is required";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
               ),
-              TextField(
+              TextFormField(
                 controller: addressController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
@@ -94,11 +104,18 @@ class _UpdateRecordState extends State<UpdateRecord> {
                   labelText: 'Donor Address',
                   hintText: 'Enter Donor Address',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This field is required";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
               ),
-              TextField(
+              TextFormField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
@@ -106,11 +123,20 @@ class _UpdateRecordState extends State<UpdateRecord> {
                   labelText: 'Donor Email',
                   hintText: 'Enter Donor Email',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This Field Cannot be Empty";
+                  } else if (!value.contains('@')) {
+                    return "Enter a correct Email Address";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
               ),
-              TextField(
+              TextFormField(
                 controller: nicController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
@@ -118,11 +144,20 @@ class _UpdateRecordState extends State<UpdateRecord> {
                   labelText: 'Donor NIC',
                   hintText: 'Enter Donor NIC',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This Field Cannot be Empty";
+                  } else if (value.length != 10) {
+                    return "Enter a Correct NIC Number ";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
               ),
-              TextField(
+              TextFormField(
                 controller: phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
@@ -130,63 +165,74 @@ class _UpdateRecordState extends State<UpdateRecord> {
                   labelText: 'Donor Phone Number',
                   hintText: 'Enter Donor Phone Number',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This Field Cannot be Empty";
+                  } else if (value.length != 10) {
+                    return "Enter a Correct Phone Number";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
               ),
               MaterialButton(
                 onPressed: () {
-                  Map<String, String> donors = {
-                    'Donor_Name': nameController.text,
-                    'Donor_Address': addressController.text,
-                    'Donor_Email': emailController.text,
-                    'Donor_Nic': nicController.text,
-                    'Donor_Phone': phoneController.text,
-                  };
+                  if (_formKey.currentState!.validate()) {
+                    Map<String, String> donors = {
+                      'Donor_Name': nameController.text,
+                      'Donor_Address': addressController.text,
+                      'Donor_Email': emailController.text,
+                      'Donor_Nic': nicController.text,
+                      'Donor_Phone': phoneController.text,
+                    };
 
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('No'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            dbRef.child(widget.donorKey).update(donors);
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('No'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              dbRef.child(widget.donorKey).update(donors);
 
-                            Fluttertoast.showToast(
-                              msg: "Data Updated Successfully!",
-                              toastLength: Toast.LENGTH_LONG,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 5,
-                              backgroundColor: Colors.grey,
-                              textColor: Colors.black,
-                              fontSize: 15,
-                            );
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FetchData()),
-                            );
-                          },
-                          child: Text('Yes'),
-                        ),
-                      ],
-                      title: const Text('Alert'),
-                      contentPadding: const EdgeInsets.all(20.0),
-                      content: const Text('Do You Want To Update Data ?'),
-                    ),
-                  );
+                              Fluttertoast.showToast(
+                                msg: "Data Updated Successfully!",
+                                toastLength: Toast.LENGTH_LONG,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 5,
+                                backgroundColor: Colors.grey,
+                                textColor: Colors.black,
+                                fontSize: 15,
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FetchData()),
+                              );
+                            },
+                            child: Text('Yes'),
+                          ),
+                        ],
+                        title: const Text('Alert'),
+                        contentPadding: const EdgeInsets.all(20.0),
+                        content: const Text('Do You Want To Update Data ?'),
+                      ),
+                    );
+                  }
                 },
-                child: const Text('Update Data'),
                 color: Colors.blue,
                 textColor: Colors.white,
                 minWidth: 300,
                 height: 40,
+                child: const Text('Update Data'),
               ),
             ],
           ),
