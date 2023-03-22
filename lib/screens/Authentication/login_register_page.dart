@@ -137,7 +137,7 @@ class _LoginPageState extends State<LoginPage>
 
   Widget _animation() {
     return Lottie.asset(
-      'login.json',
+      'assets/login.json',
       controller: _controllerAnimation,
       height: 200,
       reverse: true,
