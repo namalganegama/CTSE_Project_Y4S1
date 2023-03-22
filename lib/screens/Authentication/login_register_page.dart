@@ -149,12 +149,14 @@ class _LoginPageState extends State<LoginPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: _title(),
         ),
         body: Container(
-          decoration: BoxDecoration(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
                   'https://img.freepik.com/free-vector/vibrant-summer-ombre-background-vector_53876-105765.jpg?w=360'),
@@ -162,30 +164,40 @@ class _LoginPageState extends State<LoginPage>
               fit: BoxFit.cover,
             ),
           ),
-          height: double.infinity,
-          width: double.infinity,
           padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
             children: [
-              Center(
-                child: GestureDetector(
-                  onTap: () => {
-                    if (loginAnimation == false)
-                      {_controllerAnimation.forward(), loginAnimation = true}
-                    else
-                      {_controllerAnimation.reverse(), loginAnimation = false}
-                  },
-                  child: _animation(),
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: GestureDetector(
+                        onTap: () => {
+                          if (loginAnimation == false)
+                            {
+                              _controllerAnimation.forward(),
+                              loginAnimation = true
+                            }
+                          else
+                            {
+                              _controllerAnimation.reverse(),
+                              loginAnimation = false
+                            }
+                        },
+                        child: _animation(),
+                      ),
+                    ),
+                    SizedBox(height: 40),
+                    _entryField('Email', _controllerEmail),
+                    _passwordEntryField(_controllerPassword),
+                    _errorMessage(),
+                    _submitButton(),
+                    _loginOrRegistrationButton(),
+                  ],
                 ),
               ),
-              SizedBox(height: 40),
-              _entryField('Email', _controllerEmail),
-              _passwordEntryField(_controllerPassword),
-              _errorMessage(),
-              _submitButton(),
-              _loginOrRegistrationButton(),
             ],
           ),
         ));
