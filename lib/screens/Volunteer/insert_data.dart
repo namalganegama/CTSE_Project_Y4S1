@@ -197,7 +197,8 @@ class _InsertVolunteerState extends State<InsertVolunteer> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const VolunteerHomePage()),
+                                    builder: (context) =>
+                                        const VolunteerHomePage()),
                               );
                             },
                             child: const Text('Yes'),
@@ -214,7 +215,7 @@ class _InsertVolunteerState extends State<InsertVolunteer> {
                 textColor: Colors.white,
                 minWidth: 300,
                 height: 40,
-                child: const Text('Register'),
+                child: const Text('Register Data'),
               ),
             ],
           ),

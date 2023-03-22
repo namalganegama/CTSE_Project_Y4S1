@@ -88,7 +88,7 @@ class _FetchVolunteerState extends State<FetchVolunteer> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => UpdateRecord(
+                              builder: (_) => UpdateVolunteer(
                                   volunteerKey: volunteer['key'])));
                     },
                     child: Row(
