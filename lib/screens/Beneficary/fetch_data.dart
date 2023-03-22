@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:project/screens/Donor/update_record.dart';
+import 'package:project/screens/Beneficary/update_record.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/screens/Authentication/home_page.dart';
 
@@ -13,8 +13,9 @@ class FetchData extends StatefulWidget {
 }
 
 class _FetchDataState extends State<FetchData> {
-  Query dbRef = FirebaseDatabase.instance.ref().child('Donors');
-  DatabaseReference reference = FirebaseDatabase.instance.ref().child('Donors');
+  Query dbRef = FirebaseDatabase.instance.ref().child('Beneficaries');
+  DatabaseReference reference =
+      FirebaseDatabase.instance.ref().child('Beneficaries');
 
   final TextEditingController _searchController = TextEditingController();
   late Query _searchQuery;
@@ -26,7 +27,7 @@ class _FetchDataState extends State<FetchData> {
     _searchQuery = dbRef;
   }
 
-  Widget listItem({required Map donor}) {
+  Widget listItem({required Map beneficary}) {
     return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
@@ -37,35 +38,35 @@ class _FetchDataState extends State<FetchData> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Donor Name: ${donor['Donor_Name']}',
+            'Beneficary Name: ${beneficary['Beneficary_Name']}',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
-            'Donor Address: ${donor['Donor_Address']}',
+            'Beneficary Address: ${beneficary['Beneficary_Address']}',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
-            'Donor Email: ${donor['Donor_Email']}',
+            'Beneficary Email: ${beneficary['Beneficary_Email']}',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
-            'Donor Nic: ${donor['Donor_Nic']}',
+            'Beneficary Phone: ${beneficary['Beneficary_Phone']}',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
-            'Donor Phone: ${donor['Donor_Phone']}',
+            'Beneficary Description: ${beneficary['Beneficary_Description']}',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           Row(
@@ -78,7 +79,7 @@ class _FetchDataState extends State<FetchData> {
                       context,
                       MaterialPageRoute(
                           builder: (_) =>
-                              UpdateRecord(donorKey: donor['key'])));
+                              UpdateRecord(beneficaryKey: beneficary['key'])));
                 },
                 child: Row(
                   children: [
@@ -106,7 +107,7 @@ class _FetchDataState extends State<FetchData> {
                         ),
                         TextButton(
                           onPressed: () {
-                            reference.child(donor['key']).remove();
+                            reference.child(beneficary['key']).remove();
                             Navigator.of(context).pop();
 
                             Fluttertoast.showToast(
@@ -179,7 +180,7 @@ class _FetchDataState extends State<FetchData> {
                   ),
                   prefixIconConstraints:
                       BoxConstraints(maxHeight: 20, minWidth: 25),
-                  hintText: "Search donor By Donor Name",
+                  hintText: "Search beneficary By Item Name",
                   hintStyle: TextStyle(color: Colors.grey),
                 ),
                 onChanged: (value) {
@@ -187,7 +188,7 @@ class _FetchDataState extends State<FetchData> {
                     _searchResults = [];
                     if (value.isNotEmpty) {
                       _searchQuery = dbRef
-                          .orderByChild('Donor_Name')
+                          .orderByChild('Beneficary_Name')
                           .startAt(value.toLowerCase())
                           .endAt(value.toLowerCase());
                     } else {
@@ -202,17 +203,17 @@ class _FetchDataState extends State<FetchData> {
                 query: _searchQuery,
                 itemBuilder: (BuildContext context, DataSnapshot snapshot,
                     Animation<double> animation, int index) {
-                  Map donor = snapshot.value as Map;
-                  donor['key'] = snapshot.key;
+                  Map beneficary = snapshot.value as Map;
+                  beneficary['key'] = snapshot.key;
                   if (_searchController.text.isNotEmpty &&
-                      !donor['Donor_Name']
+                      !beneficary['Beneficary_Name']
                           .toLowerCase()
                           .contains(_searchController.text.toLowerCase())) {
                     return Container();
                   }
                   // Add the filtered volunteer to the search results list
-                  _searchResults.add(donor);
-                  return listItem(donor: donor);
+                  _searchResults.add(beneficary);
+                  return listItem(beneficary: beneficary);
                 },
               ),
             ),
