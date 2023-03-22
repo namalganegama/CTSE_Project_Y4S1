@@ -1,44 +1,43 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:project/screens/Donation/fetch_data.dart';
+import 'package:project/screens/Beneficary/fetch_data.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/screens/Authentication/home_page.dart';
 
-class UpdateDonationData extends StatefulWidget {
-  const UpdateDonationData({Key? key, required this.donationKey})
-      : super(key: key);
+class UpdateRecord extends StatefulWidget {
+  const UpdateRecord({Key? key, required this.beneficaryKey}) : super(key: key);
 
-  final String donationKey;
+  final String beneficaryKey;
 
   @override
-  State<UpdateDonationData> createState() => _UpdateDonationDataState();
+  State<UpdateRecord> createState() => _UpdateRecordState();
 }
 
-class _UpdateDonationDataState extends State<UpdateDonationData> {
-  final itemNameController = TextEditingController();
-  final itemTypeController = TextEditingController();
-  final dateController = TextEditingController();
-  final amountController = TextEditingController();
+class _UpdateRecordState extends State<UpdateRecord> {
+  final nameController = TextEditingController();
+  final addressController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
   final descriptionController = TextEditingController();
   late DatabaseReference dbRef;
 
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('Donations');
-    getDonationData();
+    dbRef = FirebaseDatabase.instance.ref().child('Beneficaries');
+    getBeneficaryData();
   }
 
-  void getDonationData() async {
-    DataSnapshot snapshot = await dbRef.child(widget.donationKey).get();
+  void getBeneficaryData() async {
+    DataSnapshot snapshot = await dbRef.child(widget.beneficaryKey).get();
 
-    Map donation = snapshot.value as Map;
+    Map item = snapshot.value as Map;
 
-    itemNameController.text = donation['Item_Name'];
-    itemTypeController.text = donation['Item_Type'];
-    dateController.text = donation['Date'];
-    amountController.text = donation['Amount'];
-    descriptionController.text = donation['Description'];
+    nameController.text = item['Beneficary_Name'];
+    addressController.text = item['Beneficary_Address'];
+    emailController.text = item['Beneficary_Email'];
+    phoneController.text = item['Beneficary_Phone'];
+    descriptionController.text = item['Beneficary_Description'];
   }
 
   @override
@@ -65,7 +64,7 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
                 height: 50,
               ),
               const Text(
-                'Update Donation Details',
+                'Update Beneficary Details',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w500,
@@ -76,48 +75,48 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
                 height: 30,
               ),
               TextField(
-                controller: itemNameController,
+                controller: nameController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Name',
-                  hintText: 'Enter Item Name',
+                  labelText: 'Beneficary Name',
+                  hintText: 'Enter Beneficary Name',
                 ),
               ),
               const SizedBox(
                 height: 30,
               ),
               TextField(
-                controller: itemTypeController,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Item Type',
-                  hintText: 'Enter Item Type',
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              TextField(
-                controller: dateController,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Donation Date',
-                  hintText: 'Enter Donation Date',
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              TextField(
-                controller: amountController,
+                controller: addressController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Amount',
-                  hintText: 'Enter Item Amount',
+                  labelText: 'Beneficary Address',
+                  hintText: 'Enter Beneficary Address',
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              TextField(
+                controller: emailController,
+                keyboardType: TextInputType.phone,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Beneficary Email Address',
+                  hintText: 'Enter Beneficary Email Address',
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              TextField(
+                controller: phoneController,
+                keyboardType: TextInputType.phone,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Beneficary Phone Number',
+                  hintText: 'Enter Beneficary Phone Number',
                 ),
               ),
               const SizedBox(
@@ -125,11 +124,11 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
               ),
               TextField(
                 controller: descriptionController,
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Description',
-                  hintText: 'Enter Item Description',
+                  labelText: 'Beneficary Description',
+                  hintText: 'Enter Beneficary Description',
                 ),
               ),
               const SizedBox(
@@ -137,12 +136,12 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
               ),
               MaterialButton(
                 onPressed: () {
-                  Map<String, String> donations = {
-                    'Item_Name': itemNameController.text,
-                    'Item_Type': itemTypeController.text,
-                    'Date': dateController.text,
-                    'Amount': amountController.text,
-                    'Description': descriptionController.text
+                  Map<String, String> beneficaries = {
+                    'Beneficary_Name': nameController.text,
+                    'Beneficary_Address': addressController.text,
+                    'Beneficary_Email': emailController.text,
+                    'Beneficary_Phone': phoneController.text,
+                    'Beneficary_Description': descriptionController.text
                   };
 
                   showDialog(
@@ -157,7 +156,9 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
                         ),
                         TextButton(
                           onPressed: () {
-                            dbRef.child(widget.donationKey).update(donations);
+                            dbRef
+                                .child(widget.beneficaryKey)
+                                .update(beneficaries);
 
                             Fluttertoast.showToast(
                               msg: "Data Updated Successfully!",
@@ -171,7 +172,7 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => FetchDonationData()),
+                                  builder: (context) => FetchData()),
                             );
                           },
                           child: Text('Yes'),
@@ -182,11 +183,6 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
                       content: const Text('Do You Want To Update Data ?'),
                     ),
                   );
-
-                  // dbRef
-                  //     .child(widget.donationKey)
-                  //     .update(donations)
-                  //     .then((value) => {Navigator.pop(context)});
                 },
                 child: const Text('Update Data'),
                 color: Colors.blue,
