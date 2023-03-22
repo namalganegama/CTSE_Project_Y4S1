@@ -4,16 +4,17 @@ import 'package:project/screens/Volunteer/fetch_data.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/screens/Authentication/home_page.dart';
 
-class UpdateRecord extends StatefulWidget {
-  const UpdateRecord({Key? key, required this.volunteerKey}) : super(key: key);
+class UpdateVolunteer extends StatefulWidget {
+  const UpdateVolunteer({Key? key, required this.volunteerKey})
+      : super(key: key);
 
   final String volunteerKey;
 
   @override
-  State<UpdateRecord> createState() => _UpdateRecordState();
+  State<UpdateVolunteer> createState() => _UpdateVolunteerState();
 }
 
-class _UpdateRecordState extends State<UpdateRecord> {
+class _UpdateVolunteerState extends State<UpdateVolunteer> {
   final nameController = TextEditingController();
   final addressController = TextEditingController();
   final emailController = TextEditingController();
@@ -40,6 +41,8 @@ class _UpdateRecordState extends State<UpdateRecord> {
     phoneController.text = item['Volunteer_Phone'];
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +58,10 @@ class _UpdateRecordState extends State<UpdateRecord> {
           child: const Text('Helping Hands'),
         ),
       ),
-      body: Center(
+      body: Form(
+        key: _formKey,
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               const SizedBox(
@@ -74,7 +78,7 @@ class _UpdateRecordState extends State<UpdateRecord> {
               const SizedBox(
                 height: 30,
               ),
-              TextField(
+              TextFormField(
                 controller: nameController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
@@ -82,11 +86,18 @@ class _UpdateRecordState extends State<UpdateRecord> {
                   labelText: 'Volunteer Name',
                   hintText: 'Enter Volunteer Name',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This Field Cannot be Empty";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
               ),
-              TextField(
+              TextFormField(
                 controller: addressController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
@@ -94,11 +105,18 @@ class _UpdateRecordState extends State<UpdateRecord> {
                   labelText: 'Volunteer Address',
                   hintText: 'Enter Volunteer Address',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This Field Cannot be Empty";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
               ),
-              TextField(
+              TextFormField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
@@ -106,11 +124,20 @@ class _UpdateRecordState extends State<UpdateRecord> {
                   labelText: 'Volunteer Email',
                   hintText: 'Enter Volunteer Email',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This Field Cannot be Empty";
+                  } else if (!value.contains('@')) {
+                    return "This Field Must be an Email";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
               ),
-              TextField(
+              TextFormField(
                 controller: nicController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
@@ -118,11 +145,20 @@ class _UpdateRecordState extends State<UpdateRecord> {
                   labelText: 'Volunteer NIC',
                   hintText: 'Enter Volunteer NIC',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This Field Cannot be Empty";
+                  } else if (value.length != 10) {
+                    return "NIC Must Contain 10 Digits";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
               ),
-              TextField(
+              TextFormField(
                 controller: phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
@@ -130,56 +166,69 @@ class _UpdateRecordState extends State<UpdateRecord> {
                   labelText: 'Volunteer Phone Number',
                   hintText: 'Enter Volunteer Phone Number',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This Field Cannot be Empty";
+                  } else if (value.length != 10) {
+                    return "Phone Number Must Contain 10 Digits";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
               ),
               MaterialButton(
                 onPressed: () {
-                  Map<String, String> volunteers = {
-                    'Volunteer_Name': nameController.text,
-                    'Volunteer_Address': addressController.text,
-                    'Volunteer_Email': emailController.text,
-                    'Volunteer_Nic': nicController.text,
-                    'Volunteer_Phone': phoneController.text,
-                  };
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('No'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            dbRef.child(widget.volunteerKey).update(volunteers);
+                  if (_formKey.currentState!.validate()) {
+                    Map<String, String> volunteers = {
+                      'Volunteer_Name': nameController.text,
+                      'Volunteer_Address': addressController.text,
+                      'Volunteer_Email': emailController.text,
+                      'Volunteer_Nic': nicController.text,
+                      'Volunteer_Phone': phoneController.text,
+                    };
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('No'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              dbRef
+                                  .child(widget.volunteerKey)
+                                  .update(volunteers);
 
-                            Fluttertoast.showToast(
-                              msg: "Data Updated Successfully!",
-                              toastLength: Toast.LENGTH_LONG,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 5,
-                              backgroundColor: Colors.grey,
-                              textColor: Colors.black,
-                              fontSize: 15,
-                            );
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FetchData()),
-                            );
-                          },
-                          child: Text('Yes'),
-                        ),
-                      ],
-                      title: const Text('Alert'),
-                      contentPadding: const EdgeInsets.all(20.0),
-                      content: const Text('Do You Want To Update Data ?'),
-                    ),
-                  );
+                              Fluttertoast.showToast(
+                                msg: "Data Updated Successfully!",
+                                toastLength: Toast.LENGTH_LONG,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 5,
+                                backgroundColor: Colors.grey,
+                                textColor: Colors.black,
+                                fontSize: 15,
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FetchVolunteer()),
+                              );
+                            },
+                            child: const Text('Yes'),
+                          ),
+                        ],
+                        title: const Text('Alert'),
+                        contentPadding: const EdgeInsets.all(20.0),
+                        content: const Text('Do You Want To Update Data ?'),
+                      ),
+                    );
+                  }
                 },
                 child: const Text('Update Data'),
                 color: Colors.blue,
