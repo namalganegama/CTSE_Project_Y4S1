@@ -182,7 +182,7 @@ class _FetchDataState extends State<FetchData> {
                   ),
                   prefixIconConstraints:
                       BoxConstraints(maxHeight: 20, minWidth: 25),
-                  hintText: "Search a Donation By Item Name",
+                  hintText: "Search Donation By Item Name",
                   hintStyle: TextStyle(color: Colors.grey),
                 ),
                 onChanged: (value) {
@@ -190,7 +190,7 @@ class _FetchDataState extends State<FetchData> {
                     _searchResults = [];
                     if (value.isNotEmpty) {
                       _searchQuery = dbRef
-                          .orderByChild('Volunteer_Name')
+                          .orderByChild('Item_Name')
                           .startAt(value.toLowerCase())
                           .endAt(value.toLowerCase());
                     } else {
