@@ -88,7 +88,7 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Volunteer Name',
+                          labelText: 'Volunteer Name *',
                           hintText: 'Enter Volunteer Name',
                         ),
                         validator: (value) {
@@ -100,14 +100,14 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                         },
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       TextFormField(
                         controller: addressController,
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Volunteer Address',
+                          labelText: 'Volunteer Address *',
                           hintText: 'Enter Volunteer Address',
                         ),
                         validator: (value) {
@@ -119,14 +119,14 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                         },
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       TextFormField(
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Volunteer Email',
+                          labelText: 'Volunteer Email *',
                           hintText: 'Enter Volunteer Email',
                         ),
                         validator: (value) {
@@ -140,14 +140,14 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                         },
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       TextFormField(
                         controller: nicController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Volunteer NIC',
+                          labelText: 'Volunteer NIC *',
                           hintText: 'Enter Volunteer NIC',
                         ),
                         validator: (value) {
@@ -161,14 +161,14 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                         },
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       TextFormField(
                         controller: phoneController,
                         keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Volunteer Phone Number',
+                          labelText: 'Volunteer Phone Number *',
                           hintText: 'Enter Volunteer Phone Number',
                         ),
                         validator: (value) {
@@ -182,7 +182,7 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                         },
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       MaterialButton(
                         onPressed: () {
