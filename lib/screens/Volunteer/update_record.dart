@@ -232,7 +232,7 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                                 title: const Text('Alert'),
                                 contentPadding: const EdgeInsets.all(20.0),
                                 content:
-                                    const Text('Do You Want To Update Data ?'),
+                                    const Text('Do You Want to Update Data ?'),
                               ),
                             );
                           }
