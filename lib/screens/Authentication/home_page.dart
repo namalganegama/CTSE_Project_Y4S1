@@ -168,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                     MaterialPageRoute(
                         builder: (context) => const BeneficaryHomePage()));
               },
-              child: const Text('Beneficary'),
+              child: const Text('Beneficiary'),
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,

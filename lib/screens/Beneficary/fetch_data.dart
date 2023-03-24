@@ -31,42 +31,42 @@ class _FetchDataState extends State<FetchData> {
     return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
-      height: 180,
+      height: 200,
       color: Colors.amberAccent,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Beneficary Name: ${beneficary['Beneficary_Name']}',
+            'Beneficiary Name: ${beneficary['Beneficary_Name']}',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
-            'Beneficary Address: ${beneficary['Beneficary_Address']}',
+            'Beneficiary Address: ${beneficary['Beneficary_Address']}',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
-            'Beneficary Email: ${beneficary['Beneficary_Email']}',
+            'Beneficiary Email: ${beneficary['Beneficary_Email']}',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
-            'Beneficary Phone: ${beneficary['Beneficary_Phone']}',
+            'Beneficiary Phone: ${beneficary['Beneficary_Phone']}',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
-            'Beneficary Description: ${beneficary['Beneficary_Description']}',
+            'Beneficiary Description: ${beneficary['Beneficary_Description']}',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           Row(
@@ -180,7 +180,7 @@ class _FetchDataState extends State<FetchData> {
                   ),
                   prefixIconConstraints:
                       BoxConstraints(maxHeight: 20, minWidth: 25),
-                  hintText: "Search beneficary By Item Name",
+                  hintText: "Search Beneficiary Details By Beneficiary Name",
                   hintStyle: TextStyle(color: Colors.grey),
                 ),
                 onChanged: (value) {
