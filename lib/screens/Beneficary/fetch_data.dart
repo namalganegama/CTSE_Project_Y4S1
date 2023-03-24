@@ -31,7 +31,7 @@ class _FetchDataState extends State<FetchData> {
     return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
-      height: 180,
+      height: 200,
       color: Colors.amberAccent,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
