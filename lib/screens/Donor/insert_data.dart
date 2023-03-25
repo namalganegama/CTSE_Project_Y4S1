@@ -45,7 +45,7 @@ class _InsertDataState extends State<InsertData> {
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               const Text(
@@ -197,10 +197,10 @@ class _InsertDataState extends State<InsertData> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DonorHomePage()),
+                                    builder: (context) => const DonorHomePage()),
                               );
                             },
-                            child: Text('Yes'),
+                            child: const Text('Yes'),
                           ),
                         ],
                         title: const Text('Alert'),

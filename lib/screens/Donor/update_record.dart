@@ -60,7 +60,7 @@ class _UpdateRecordState extends State<UpdateRecord> {
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               const SizedBox(
@@ -215,10 +215,10 @@ class _UpdateRecordState extends State<UpdateRecord> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => FetchData()),
+                                    builder: (context) => const FetchData()),
                               );
                             },
-                            child: Text('Yes'),
+                            child: const Text('Yes'),
                           ),
                         ],
                         title: const Text('Alert'),
