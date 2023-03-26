@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
             //       'https://image.shutterstock.com/image-photo/image-260nw-720519355.jpg'),
             // ),
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
 
             CarouselSlider.builder(
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
               height: 40,
             ),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             MaterialButton(
               onPressed: () {
@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
               height: 40,
             ),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             MaterialButton(
               onPressed: () {
@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> {
               height: 40,
             ),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             MaterialButton(
               onPressed: () {
@@ -168,14 +168,14 @@ class _HomePageState extends State<HomePage> {
                     MaterialPageRoute(
                         builder: (context) => const BeneficaryHomePage()));
               },
-              child: const Text('Beneficary'),
+              child: const Text('Beneficiary'),
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
               height: 40,
             ),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
           ],
         ),

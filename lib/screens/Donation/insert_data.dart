@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:project/screens/Donation/dashboard.dart';
@@ -47,7 +49,7 @@ class _InsertDonationDataState extends State<InsertDonationData> {
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               const Text(
@@ -200,10 +202,10 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DonationHomePage()),
+                                    builder: (context) => const DonationHomePage()),
                               );
                             },
-                            child: Text('Yes'),
+                            child: const Text('Yes'),
                           ),
                         ],
                         title: const Text('Alert'),
@@ -213,11 +215,11 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                     );
                   }
                 },
-                child: const Text('Insert Data'),
                 color: Colors.blue,
                 textColor: Colors.white,
                 minWidth: 300,
                 height: 40,
+                child: const Text('Insert Data'),
               ),
             ],
           ),

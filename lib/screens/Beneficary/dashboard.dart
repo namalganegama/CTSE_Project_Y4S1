@@ -31,7 +31,7 @@ class _BeneficaryHomePageState extends State<BeneficaryHomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'Beneficary Dashboard',
+              'Beneficiary Dashboard',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
@@ -58,7 +58,7 @@ class _BeneficaryHomePageState extends State<BeneficaryHomePage> {
                     MaterialPageRoute(
                         builder: (context) => const InsertData()));
               },
-              child: const Text('Insert Beneficary Details'),
+              child: const Text('Insert Beneficiary Details'),
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
@@ -72,7 +72,7 @@ class _BeneficaryHomePageState extends State<BeneficaryHomePage> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const FetchData()));
               },
-              child: const Text('View Beneficary Details'),
+              child: const Text('View Beneficiary Details'),
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,

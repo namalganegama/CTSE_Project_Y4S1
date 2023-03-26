@@ -39,35 +39,35 @@ class _FetchDonationDataState extends State<FetchDonationData> {
         children: [
           Text(
             'Item Name: ${donation['Item_Name']}',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
             'Item Type: ${donation['Item_Type']}',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
             'Donation Date: ${donation['Date']}',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
             'Amount: ${donation['Amount']}',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 5,
           ),
           Text(
             'Item Description: ${donation['Description']}',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -122,7 +122,7 @@ class _FetchDonationDataState extends State<FetchDonationData> {
                               fontSize: 15,
                             );
                           },
-                          child: Text('Yes'),
+                          child: const Text('Yes'),
                         ),
                       ],
                       title: const Text('Alert'),

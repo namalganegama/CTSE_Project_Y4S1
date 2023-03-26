@@ -45,7 +45,7 @@ class _InsertDataState extends State<InsertData> {
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               const Text(
@@ -69,7 +69,7 @@ class _InsertDataState extends State<InsertData> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This field is required";
                   } else {
                     return null;
                   }
@@ -88,7 +88,7 @@ class _InsertDataState extends State<InsertData> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This field is required";
                   } else {
                     return null;
                   }
@@ -108,6 +108,8 @@ class _InsertDataState extends State<InsertData> {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "This Field Cannot be empty";
+                  } else if (!value.contains('@')) {
+                    return "Enter a correct Email Address";
                   } else {
                     return null;
                   }
@@ -127,6 +129,8 @@ class _InsertDataState extends State<InsertData> {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "This Field Cannot be empty";
+                  } else if (value.length != 10) {
+                    return "Enter a Correct NIC Number ";
                   } else {
                     return null;
                   }
@@ -143,6 +147,15 @@ class _InsertDataState extends State<InsertData> {
                   labelText: 'Donor Phone Number',
                   hintText: 'Enter Donor Phone Number',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This Field Cannot be Empty";
+                  } else if (value.length != 10) {
+                    return "Enter a Correct Phone Number";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
                 height: 30,
@@ -184,10 +197,10 @@ class _InsertDataState extends State<InsertData> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DonorHomePage()),
+                                    builder: (context) => const DonorHomePage()),
                               );
                             },
-                            child: Text('Yes'),
+                            child: const Text('Yes'),
                           ),
                         ],
                         title: const Text('Alert'),
@@ -197,11 +210,11 @@ class _InsertDataState extends State<InsertData> {
                     );
                   }
                 },
-                child: const Text('Insert Data'),
                 color: Colors.blue,
                 textColor: Colors.white,
                 minWidth: 300,
                 height: 40,
+                child: const Text('Insert Data'),
               ),
             ],
           ),

@@ -50,7 +50,7 @@ class _InsertDataState extends State<InsertData> {
           child: Column(
             children: [
               const Text(
-                'Insert Beneficary Details',
+                'Insert Beneficiary Details',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w500,
@@ -65,8 +65,8 @@ class _InsertDataState extends State<InsertData> {
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficary Name',
-                  hintText: 'Enter Beneficary Name',
+                  labelText: 'Beneficiary Name',
+                  hintText: 'Enter Beneficiary Name',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -84,8 +84,8 @@ class _InsertDataState extends State<InsertData> {
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficary Address',
-                  hintText: 'Enter Beneficary Address',
+                  labelText: 'Beneficiary Address',
+                  hintText: 'Enter Beneficiary Address',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -103,8 +103,8 @@ class _InsertDataState extends State<InsertData> {
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficary Email Address',
-                  hintText: 'Enter Beneficary Email',
+                  labelText: 'Beneficiary Email Address',
+                  hintText: 'Enter Beneficiary Email',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -122,8 +122,8 @@ class _InsertDataState extends State<InsertData> {
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficary Phone Number',
-                  hintText: 'Enter Beneficary Phone',
+                  labelText: 'Beneficiary Phone Number',
+                  hintText: 'Enter Beneficiary Phone Number',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -141,8 +141,8 @@ class _InsertDataState extends State<InsertData> {
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficary Description',
-                  hintText: 'Enter Beneficary Description',
+                  labelText: 'Beneficiary Description',
+                  hintText: 'Enter Beneficiary Description',
                 ),
               ),
               const SizedBox(

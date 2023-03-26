@@ -58,7 +58,7 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
       ),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               const SizedBox(
@@ -171,10 +171,10 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => FetchDonationData()),
+                                  builder: (context) => const FetchDonationData()),
                             );
                           },
-                          child: Text('Yes'),
+                          child: const Text('Yes'),
                         ),
                       ],
                       title: const Text('Alert'),
@@ -183,16 +183,12 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
                     ),
                   );
 
-                  // dbRef
-                  //     .child(widget.donationKey)
-                  //     .update(donations)
-                  //     .then((value) => {Navigator.pop(context)});
                 },
-                child: const Text('Update Data'),
                 color: Colors.blue,
                 textColor: Colors.white,
                 minWidth: 300,
                 height: 40,
+                child: const Text('Update Data'),
               ),
             ],
           ),
