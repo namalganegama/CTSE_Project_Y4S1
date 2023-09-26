@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project/screens/Authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -71,6 +72,30 @@ class _LoginPageState extends State<LoginPage>
     }
   }
 
+  Future<void> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      if (googleUser == null) {
+        // User canceled the sign-in process
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      setState(() {
+        errorMessage = e.toString();
+      });
+    }
+  }
+
   Widget _title() {
     return const Text('Helping Hands');
   }
@@ -116,11 +141,36 @@ class _LoginPageState extends State<LoginPage>
     return Text(errorMessage == '' ? '' : 'Error : $errorMessage');
   }
 
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    clientId:
+        '684143871341-9dvnce6gk60jbpinsfbh9740ni2ur2m1.apps.googleusercontent.com',
+  );
+
   Widget _submitButton() {
-    return ElevatedButton(
-      onPressed:
-          isLogin ? signInWithEmailAndPassword : CreateUserWithEmailAndPassword,
-      child: Text(isLogin ? 'Login' : 'Register'),
+    return Column(
+      children: [
+        ElevatedButton(
+          onPressed: isLogin
+              ? signInWithEmailAndPassword
+              : CreateUserWithEmailAndPassword,
+          child: Text(isLogin ? 'Login' : 'Register'),
+        ),
+        SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: signInWithGoogle,
+          style: ElevatedButton.styleFrom(
+            primary: Colors.red, // Customize the button color
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset('assets/google_logo2.png', height: 24.0),
+              SizedBox(width: 12.0),
+              Text('Sign in with Google'),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
