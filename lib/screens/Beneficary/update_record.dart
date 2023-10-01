@@ -64,7 +64,7 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 height: 50,
               ),
               const Text(
-                'Update Beneficary Details',
+                'Update Beneficiary Details',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w500,
@@ -79,8 +79,8 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficary Name',
-                  hintText: 'Enter Beneficary Name',
+                  labelText: 'Beneficiary Name',
+                  hintText: 'Enter Beneficiary Name',
                 ),
               ),
               const SizedBox(
@@ -91,8 +91,8 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficary Address',
-                  hintText: 'Enter Beneficary Address',
+                  labelText: 'Beneficiary Address',
+                  hintText: 'Enter Beneficiary Address',
                 ),
               ),
               const SizedBox(
@@ -103,8 +103,8 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficary Email Address',
-                  hintText: 'Enter Beneficary Email Address',
+                  labelText: 'Beneficiary Email Address',
+                  hintText: 'Enter Beneficiary Email Address',
                 ),
               ),
               const SizedBox(
@@ -115,8 +115,8 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficary Phone Number',
-                  hintText: 'Enter Beneficary Phone Number',
+                  labelText: 'Beneficiary Phone Number',
+                  hintText: 'Enter Beneficiary Phone Number',
                 ),
               ),
               const SizedBox(
@@ -127,8 +127,8 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficary Description',
-                  hintText: 'Enter Beneficary Description',
+                  labelText: 'Beneficiary Description',
+                  hintText: 'Enter Beneficiary Description',
                 ),
               ),
               const SizedBox(

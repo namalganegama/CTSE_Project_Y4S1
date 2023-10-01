@@ -58,11 +58,12 @@ class _DonationHomePageState extends State<DonationHomePage> {
                     MaterialPageRoute(
                         builder: (context) => const InsertDonationData()));
               },
-              child: const Text('Insert Donation Details'),
+              
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
               height: 40,
+              child: const Text('Insert Donation Details'),
             ),
             const SizedBox(
               height: 30,
@@ -74,11 +75,12 @@ class _DonationHomePageState extends State<DonationHomePage> {
                     MaterialPageRoute(
                         builder: (context) => const FetchDonationData()));
               },
-              child: const Text('View Donation Details'),
+              
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
               height: 40,
+              child: const Text('View Donation Details'),
             ),
           ],
         ),
