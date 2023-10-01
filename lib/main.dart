@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:project/splash_screen.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

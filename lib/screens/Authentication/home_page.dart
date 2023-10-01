@@ -5,9 +5,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:project/screens/Beneficary/dashboard.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:project/screens/Donation/dashboard.dart';
-// import 'package:project/screens/Beneficary/dashboard.dart';
 import 'package:project/screens/Donor/dashboard.dart';
 import 'package:project/screens/Volunteer/dashboard.dart';
+import 'package:project/screens/Authentication/jailbreak_detection.dart';
 
 import 'package:project/screens/Authentication/login_register_page.dart';
 
@@ -170,6 +170,20 @@ class _HomePageState extends State<HomePage> {
               },
               child: const Text('Beneficiary'),
               color: Colors.blue,
+              textColor: Colors.white,
+              minWidth: 300,
+              height: 40,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            MaterialButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => jailBreak()));
+              },
+              child: const Text('Jailbreak Detection'),
+              color: Colors.red,
               textColor: Colors.white,
               minWidth: 300,
               height: 40,
