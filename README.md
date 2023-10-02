@@ -1,16 +1,12 @@
 # charity_app
 
-A new Flutter project.
+“Helping Hands” is a mobile app designed to facilitate charitable donations and contributions to society. The app consist of mainly 4 components,
+	1.  Beneficiary
+	2. Donation
+	3. Doner
+	4. Volunteer
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Wishvajith G.K.N.P. (namalpathum) - IT20168704 - Project Leader
+## Senaweera T.I.S (ishmaSenaweera) - IT20123468
+## Weeratunga G.S. (sathmini) - IT19087252
+## Wijerathne D.M.R. (ravindu629) - IT19208022

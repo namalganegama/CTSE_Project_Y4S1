@@ -5,9 +5,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:project/screens/Beneficary/dashboard.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:project/screens/Donation/dashboard.dart';
-// import 'package:project/screens/Beneficary/dashboard.dart';
 import 'package:project/screens/Donor/dashboard.dart';
 import 'package:project/screens/Volunteer/dashboard.dart';
+import 'package:project/screens/Authentication/jailbreak_detection.dart';
 
 import 'package:project/screens/Authentication/login_register_page.dart';
 
@@ -23,12 +23,17 @@ class _HomePageState extends State<HomePage> {
 
   int activeIndex = 0;
   final controller = CarouselController();
+  // final urlImages = [
+  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFbyulT-JGYWgijetJaAu1NoGDPpB29uP7yQ&usqp=CAU',
+  //   'https://img.freepik.com/free-vector/people-carrying-donation-charity-related-icons_53876-43091.jpg',
+  //   'https://img.freepik.com/premium-vector/donation-box-charity-concept-human-hands-putting-money-cash-love-heart-donation-box-together-helping-doing-charity-vector-illustration_140689-3158.jpg',
+  //   'https://media.istockphoto.com/id/1223169247/id/vektor/sumbangan-makanan-dan-bahan-makanan.jpg?b=1&s=170667a&w=0&k=20&c=XLV422GUZh_TfiV5mUNwqwOB7KMpOXNjkhGa0hgqXfo=',
+  //   'https://media.istockphoto.com/id/1156535303/vector/volunteer-young-people-with-donation-boxes-isolated-on-white-background-vector-flat-cartoon.jpg?s=612x612&w=0&k=20&c=_CGuGN6LA_2ysMidVPS5oX1T3hy7PVARt3FzcRbYjno=',
+  // ];
   final urlImages = [
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFbyulT-JGYWgijetJaAu1NoGDPpB29uP7yQ&usqp=CAU',
-    'https://img.freepik.com/free-vector/people-carrying-donation-charity-related-icons_53876-43091.jpg',
-    'https://img.freepik.com/premium-vector/donation-box-charity-concept-human-hands-putting-money-cash-love-heart-donation-box-together-helping-doing-charity-vector-illustration_140689-3158.jpg',
-    'https://media.istockphoto.com/id/1223169247/id/vektor/sumbangan-makanan-dan-bahan-makanan.jpg?b=1&s=170667a&w=0&k=20&c=XLV422GUZh_TfiV5mUNwqwOB7KMpOXNjkhGa0hgqXfo=',
-    'https://media.istockphoto.com/id/1156535303/vector/volunteer-young-people-with-donation-boxes-isolated-on-white-background-vector-flat-cartoon.jpg?s=612x612&w=0&k=20&c=_CGuGN6LA_2ysMidVPS5oX1T3hy7PVARt3FzcRbYjno=',
+    'assets/images/image1.png',
+    'assets/images/image2.png',
+    'assets/images/image3.png',
   ];
 
   Future<void> signOut() async {
@@ -90,7 +95,7 @@ class _HomePageState extends State<HomePage> {
             //       'https://image.shutterstock.com/image-photo/image-260nw-720519355.jpg'),
             // ),
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
 
             CarouselSlider.builder(
@@ -127,7 +132,7 @@ class _HomePageState extends State<HomePage> {
               height: 40,
             ),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             MaterialButton(
               onPressed: () {
@@ -143,7 +148,7 @@ class _HomePageState extends State<HomePage> {
               height: 40,
             ),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             MaterialButton(
               onPressed: () {
@@ -159,7 +164,7 @@ class _HomePageState extends State<HomePage> {
               height: 40,
             ),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             MaterialButton(
               onPressed: () {
@@ -168,14 +173,28 @@ class _HomePageState extends State<HomePage> {
                     MaterialPageRoute(
                         builder: (context) => const BeneficaryHomePage()));
               },
-              child: const Text('Beneficary'),
+              child: const Text('Beneficiary'),
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
               height: 40,
             ),
             const SizedBox(
-              height: 30,
+              height: 40,
+            ),
+            MaterialButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => jailBreak()));
+              },
+              child: const Text('Jailbreak Detection'),
+              color: Colors.red,
+              textColor: Colors.white,
+              minWidth: 300,
+              height: 40,
+            ),
+            const SizedBox(
+              height: 20,
             ),
           ],
         ),

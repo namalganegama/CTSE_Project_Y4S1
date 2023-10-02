@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project/screens/Authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -71,6 +73,81 @@ class _LoginPageState extends State<LoginPage>
     }
   }
 
+  Future<void> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      if (googleUser == null) {
+        // User canceled the sign-in process
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      setState(() {
+        errorMessage = e.toString();
+      });
+    }
+  }
+
+  Future<void> requestMultiplePermissions(BuildContext context) async {
+    final permissions = [
+      Permission.camera,
+      Permission.microphone,
+      // Add more permissions you need here
+    ];
+
+    Map<Permission, PermissionStatus> statuses = await permissions.request();
+
+    // Check the status of each requested permission
+    statuses.forEach((permission, status) {
+      if (status.isGranted) {
+        // Permission granted
+        print('${permission.toString()}: granted');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Permission Granted'),
+              content:
+                  Text('${permission.toString()} permission has been granted.'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      } else if (status.isDenied) {
+        // Permission denied
+        print('${permission.toString()}: denied');
+      } else if (status.isPermanentlyDenied) {
+        // Permission permanently denied, ask user to go to settings
+        openAppSettings();
+      }
+    });
+  }
+
+  Widget _permissionButton() {
+    return ElevatedButton(
+      onPressed: () {
+        requestMultiplePermissions(context); // Pass the context
+      },
+      child: Text('Request Permissions'),
+    );
+  }
+
   Widget _title() {
     return const Text('Helping Hands');
   }
@@ -116,11 +193,36 @@ class _LoginPageState extends State<LoginPage>
     return Text(errorMessage == '' ? '' : 'Error : $errorMessage');
   }
 
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    clientId:
+        '684143871341-9dvnce6gk60jbpinsfbh9740ni2ur2m1.apps.googleusercontent.com',
+  );
+
   Widget _submitButton() {
-    return ElevatedButton(
-      onPressed:
-          isLogin ? signInWithEmailAndPassword : CreateUserWithEmailAndPassword,
-      child: Text(isLogin ? 'Login' : 'Register'),
+    return Column(
+      children: [
+        ElevatedButton(
+          onPressed: isLogin
+              ? signInWithEmailAndPassword
+              : CreateUserWithEmailAndPassword,
+          child: Text(isLogin ? 'Login' : 'Register'),
+        ),
+        SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: signInWithGoogle,
+          style: ElevatedButton.styleFrom(
+            primary: Colors.red, // Customize the button color
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset('assets/google_logo2.png', height: 24.0),
+              SizedBox(width: 12.0),
+              Text('Sign in with Google'),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -149,12 +251,14 @@ class _LoginPageState extends State<LoginPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: _title(),
         ),
         body: Container(
-          decoration: BoxDecoration(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
                   'https://img.freepik.com/free-vector/vibrant-summer-ombre-background-vector_53876-105765.jpg?w=360'),
@@ -162,30 +266,41 @@ class _LoginPageState extends State<LoginPage>
               fit: BoxFit.cover,
             ),
           ),
-          height: double.infinity,
-          width: double.infinity,
           padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
             children: [
-              Center(
-                child: GestureDetector(
-                  onTap: () => {
-                    if (loginAnimation == false)
-                      {_controllerAnimation.forward(), loginAnimation = true}
-                    else
-                      {_controllerAnimation.reverse(), loginAnimation = false}
-                  },
-                  child: _animation(),
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: GestureDetector(
+                        onTap: () => {
+                          if (loginAnimation == false)
+                            {
+                              _controllerAnimation.forward(),
+                              loginAnimation = true
+                            }
+                          else
+                            {
+                              _controllerAnimation.reverse(),
+                              loginAnimation = false
+                            }
+                        },
+                        child: _animation(),
+                      ),
+                    ),
+                    SizedBox(height: 40),
+                    _entryField('Email', _controllerEmail),
+                    _passwordEntryField(_controllerPassword),
+                    _errorMessage(),
+                    _submitButton(),
+                    _loginOrRegistrationButton(),
+                    // _permissionButton(),
+                  ],
                 ),
               ),
-              SizedBox(height: 40),
-              _entryField('Email', _controllerEmail),
-              _passwordEntryField(_controllerPassword),
-              _errorMessage(),
-              _submitButton(),
-              _loginOrRegistrationButton(),
             ],
           ),
         ));
