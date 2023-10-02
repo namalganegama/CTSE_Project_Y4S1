@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/screens/Donation/insert_data.dart';
 import 'package:project/screens/Donation/fetch_data.dart';
 import 'package:project/screens/Authentication/home_page.dart';
+import 'package:project/screens/Authentication/encryption.dart';
 
 class DonationHomePage extends StatefulWidget {
   const DonationHomePage({Key? key}) : super(key: key);
@@ -58,7 +59,6 @@ class _DonationHomePageState extends State<DonationHomePage> {
                     MaterialPageRoute(
                         builder: (context) => const InsertDonationData()));
               },
-              
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
@@ -75,12 +75,25 @@ class _DonationHomePageState extends State<DonationHomePage> {
                     MaterialPageRoute(
                         builder: (context) => const FetchDonationData()));
               },
-              
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
               height: 40,
               child: const Text('View Donation Details'),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            MaterialButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => encryption()));
+              },
+              color: Colors.red,
+              textColor: Colors.white,
+              minWidth: 300,
+              height: 40,
+              child: const Text('Encryption'),
             ),
           ],
         ),
