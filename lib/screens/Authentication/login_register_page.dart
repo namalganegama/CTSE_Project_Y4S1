@@ -218,9 +218,20 @@ class _LoginPageState extends State<LoginPage>
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter password';
+          return 'Please enter a password';
         } else if (value.length < 8) {
           return 'Password should be at least 8 characters';
+        } else if (!RegExp(r'(?=.*[A-Z])').hasMatch(value)) {
+          return 'Password should have at least one uppercase letter';
+        } else if (!RegExp(r'(?=.*[a-z])').hasMatch(value)) {
+          return 'Password should have at least one lowercase letter';
+        } else if (!RegExp(r'(?=.*\d)').hasMatch(value)) {
+          return 'Password should have at least one number';
+        } else if (!RegExp(r'(?=.*[!@#$%^&*()\-_=+{};:,.<>?~])')
+            .hasMatch(value)) {
+          return 'Password should have at least one special character';
+        } else if (RegExp(r'\s').hasMatch(value)) {
+          return 'Password should not contain spaces';
         }
         return null;
       },
