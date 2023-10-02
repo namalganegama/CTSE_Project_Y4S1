@@ -184,7 +184,9 @@ class _LoginPageState extends State<LoginPage>
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter an email';
-        } else if (title == 'Email' && !value.contains('@')) {
+        } else if (!RegExp(
+                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(value)) {
           return 'Please enter a valid email';
         }
         return null;
