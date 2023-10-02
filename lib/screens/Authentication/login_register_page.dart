@@ -3,6 +3,7 @@ import 'package:project/screens/Authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -94,6 +95,57 @@ class _LoginPageState extends State<LoginPage>
         errorMessage = e.toString();
       });
     }
+  }
+
+  Future<void> requestMultiplePermissions(BuildContext context) async {
+    final permissions = [
+      Permission.camera,
+      Permission.microphone,
+      // Add more permissions you need here
+    ];
+
+    Map<Permission, PermissionStatus> statuses = await permissions.request();
+
+    // Check the status of each requested permission
+    statuses.forEach((permission, status) {
+      if (status.isGranted) {
+        // Permission granted
+        print('${permission.toString()}: granted');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Permission Granted'),
+              content:
+                  Text('${permission.toString()} permission has been granted.'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      } else if (status.isDenied) {
+        // Permission denied
+        print('${permission.toString()}: denied');
+      } else if (status.isPermanentlyDenied) {
+        // Permission permanently denied, ask user to go to settings
+        openAppSettings();
+      }
+    });
+  }
+
+  Widget _permissionButton() {
+    return ElevatedButton(
+      onPressed: () {
+        requestMultiplePermissions(context); // Pass the context
+      },
+      child: Text('Request Permissions'),
+    );
   }
 
   Widget _title() {
@@ -245,6 +297,7 @@ class _LoginPageState extends State<LoginPage>
                     _errorMessage(),
                     _submitButton(),
                     _loginOrRegistrationButton(),
+                    // _permissionButton(),
                   ],
                 ),
               ),
