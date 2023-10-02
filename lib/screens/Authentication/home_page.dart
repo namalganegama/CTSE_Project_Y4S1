@@ -203,4 +203,4 @@ class _HomePageState extends State<HomePage> {
 
 Widget buildImage(String urlImage, int index) => Container(
     margin: const EdgeInsets.symmetric(horizontal: 5),
-    child: Image.network(urlImage, fit: BoxFit.cover));
+    child: Image.asset(urlImage, fit: BoxFit.cover));
