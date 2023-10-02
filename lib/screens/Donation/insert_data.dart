@@ -20,6 +20,7 @@ class _InsertDonationDataState extends State<InsertDonationData> {
   final dateController = TextEditingController();
   final amountController = TextEditingController();
   final descriptionController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   late DatabaseReference dbRef;
 
@@ -28,8 +29,6 @@ class _InsertDonationDataState extends State<InsertDonationData> {
     super.initState();
     dbRef = FirebaseDatabase.instance.ref().child('Donations');
   }
-
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -61,52 +60,52 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: itemNameController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Name',
+                  labelText: 'Item Name *',
                   hintText: 'Enter Item Name',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This field is required";
                   } else {
                     return null;
                   }
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: itemTypeController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Type',
+                  labelText: 'Item Type *',
                   hintText: 'Enter Item Type',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This field is required";
                   } else {
                     return null;
                   }
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: dateController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Donation Date',
+                  labelText: 'Donation Date *',
                   hintText: 'Enter Donation Date',
                 ),
                 onTap: () async {
@@ -125,33 +124,36 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This field is required";
                   } else {
                     return null;
                   }
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: amountController,
-                keyboardType: TextInputType.number,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Amount',
+                  labelText: 'Item Amount *',
                   hintText: 'Enter Item Amount',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This field is required";
+                  } else if (double.parse(value) <= 0) {
+                    return "Amount should be greater than 0";
                   } else {
                     return null;
                   }
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: descriptionController,
@@ -163,7 +165,7 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               MaterialButton(
                 onPressed: () {
@@ -202,7 +204,8 @@ class _InsertDonationDataState extends State<InsertDonationData> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const DonationHomePage()),
+                                    builder: (context) =>
+                                        const DonationHomePage()),
                               );
                             },
                             child: const Text('Yes'),

@@ -17,17 +17,19 @@ class _LoginPageState extends State<LoginPage>
   String? errorMessage = '';
   bool isLogin = true;
   bool _passwordVisible = false;
+  bool isLoading = false;
 
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
   late final AnimationController _controllerAnimation;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     _passwordVisible = false;
 
     _controllerAnimation = AnimationController(
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
       vsync: this,
     );
   }
@@ -41,35 +43,53 @@ class _LoginPageState extends State<LoginPage>
   bool loginAnimation = false;
 
   Future<void> signInWithEmailAndPassword() async {
-    if (loginAnimation == false) {
-      _controllerAnimation.forward();
-      loginAnimation = true;
-    } else {
-      _controllerAnimation.reverse();
-      loginAnimation = false;
-    }
-    try {
-      await Auth().signInWithEmailAndPassword(
-        email: _controllerEmail.text,
-        password: _controllerPassword.text,
-      );
-    } on FirebaseAuthException catch (e) {
+    if (_formKey.currentState!.validate()) {
       setState(() {
-        errorMessage = e.message;
+        isLoading = true;
       });
+      if (loginAnimation == false) {
+        _controllerAnimation.forward();
+        loginAnimation = true;
+      } else {
+        _controllerAnimation.reverse();
+        loginAnimation = false;
+      }
+      try {
+        await Auth().signInWithEmailAndPassword(
+          email: _controllerEmail.text,
+          password: _controllerPassword.text,
+        );
+        setState(() {
+          isLoading = false;
+        });
+      } on FirebaseAuthException catch (e) {
+        setState(() {
+          isLoading = false;
+          errorMessage = e.message;
+        });
+      }
     }
   }
 
-  Future<void> CreateUserWithEmailAndPassword() async {
-    try {
-      await Auth().CreateUserWithEmailAndPassword(
-        email: _controllerEmail.text,
-        password: _controllerPassword.text,
-      );
-    } on FirebaseAuthException catch (e) {
+  Future<void> createUserWithEmailAndPassword() async {
+    if (_formKey.currentState!.validate()) {
       setState(() {
-        errorMessage = e.message;
+        isLoading = true;
       });
+      try {
+        await Auth().CreateUserWithEmailAndPassword(
+          email: _controllerEmail.text,
+          password: _controllerPassword.text,
+        );
+        setState(() {
+          isLoading = false;
+        });
+      } on FirebaseAuthException catch (e) {
+        setState(() {
+          isLoading = false;
+          errorMessage = e.message;
+        });
+      }
     }
   }
 
@@ -161,6 +181,14 @@ class _LoginPageState extends State<LoginPage>
       decoration: InputDecoration(
         labelText: title,
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter an email';
+        } else if (title == 'Email' && !value.contains('@')) {
+          return 'Please enter a valid email';
+        }
+        return null;
+      },
     );
   }
 
@@ -186,6 +214,14 @@ class _LoginPageState extends State<LoginPage>
           },
         ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter password';
+        } else if (value.length < 8) {
+          return 'Password should be at least 8 characters';
+        }
+        return null;
+      },
     );
   }
 
@@ -193,7 +229,7 @@ class _LoginPageState extends State<LoginPage>
     return Text(errorMessage == '' ? '' : 'Error : $errorMessage');
   }
 
-  GoogleSignIn _googleSignIn = GoogleSignIn(
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
     clientId:
         '684143871341-9dvnce6gk60jbpinsfbh9740ni2ur2m1.apps.googleusercontent.com',
   );
@@ -204,10 +240,10 @@ class _LoginPageState extends State<LoginPage>
         ElevatedButton(
           onPressed: isLogin
               ? signInWithEmailAndPassword
-              : CreateUserWithEmailAndPassword,
+              : createUserWithEmailAndPassword,
           child: Text(isLogin ? 'Login' : 'Register'),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         ElevatedButton(
           onPressed: signInWithGoogle,
           style: ElevatedButton.styleFrom(
@@ -217,8 +253,8 @@ class _LoginPageState extends State<LoginPage>
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset('assets/google_logo2.png', height: 24.0),
-              SizedBox(width: 12.0),
-              Text('Sign in with Google'),
+              const SizedBox(width: 12.0),
+              const Text('Sign in with Google'),
             ],
           ),
         ),
@@ -256,53 +292,60 @@ class _LoginPageState extends State<LoginPage>
           title: _title(),
         ),
         body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(
-                  'https://img.freepik.com/free-vector/vibrant-summer-ombre-background-vector_53876-105765.jpg?w=360'),
-              // AssetImage("back/background.jpg"),
-              fit: BoxFit.cover,
-            ),
-          ),
-          padding: const EdgeInsets.all(20),
-          child: ListView(
-            children: [
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: GestureDetector(
-                        onTap: () => {
-                          if (loginAnimation == false)
-                            {
-                              _controllerAnimation.forward(),
-                              loginAnimation = true
-                            }
-                          else
-                            {
-                              _controllerAnimation.reverse(),
-                              loginAnimation = false
-                            }
-                        },
-                        child: _animation(),
-                      ),
-                    ),
-                    SizedBox(height: 40),
-                    _entryField('Email', _controllerEmail),
-                    _passwordEntryField(_controllerPassword),
-                    _errorMessage(),
-                    _submitButton(),
-                    _loginOrRegistrationButton(),
-                    // _permissionButton(),
-                  ],
-                ),
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(
+                    'https://img.freepik.com/free-vector/vibrant-summer-ombre-background-vector_53876-105765.jpg?w=360'),
+                fit: BoxFit.cover,
               ),
-            ],
-          ),
-        ));
+            ),
+            padding: const EdgeInsets.all(20),
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                children: [
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: GestureDetector(
+                            onTap: () => {
+                              if (loginAnimation == false)
+                                {
+                                  _controllerAnimation.forward(),
+                                  loginAnimation = true
+                                }
+                              else
+                                {
+                                  _controllerAnimation.reverse(),
+                                  loginAnimation = false
+                                }
+                            },
+                            child: _animation(),
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+                        _entryField('Email', _controllerEmail),
+                        _passwordEntryField(_controllerPassword),
+                        if (isLoading) ...[
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 16.0),
+                            child: CircularProgressIndicator(),
+                          ),
+                        ],
+                        _errorMessage(),
+                        _submitButton(),
+                        _loginOrRegistrationButton(),
+                        // _permissionButton(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )));
   }
 }

@@ -17,6 +17,8 @@ class _InsertVolunteerState extends State<InsertVolunteer> {
   final emailController = TextEditingController();
   final nicController = TextEditingController();
   final phoneController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   late DatabaseReference dbRef;
   var currentTime = DateTime.now();
 
@@ -25,8 +27,6 @@ class _InsertVolunteerState extends State<InsertVolunteer> {
     super.initState();
     dbRef = FirebaseDatabase.instance.ref().child('Volunteers');
   }
-
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _InsertVolunteerState extends State<InsertVolunteer> {
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "This Field Cannot be Empty";
+                          return "This field is required";
                         } else {
                           return null;
                         }
@@ -97,7 +97,7 @@ class _InsertVolunteerState extends State<InsertVolunteer> {
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "This Field Cannot be Empty";
+                          return "This field is required";
                         } else {
                           return null;
                         }
@@ -116,9 +116,9 @@ class _InsertVolunteerState extends State<InsertVolunteer> {
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "This Field Cannot be Empty";
+                          return "This field is required";
                         } else if (!value.contains('@')) {
-                          return "This Field Must be an Email";
+                          return "Please enter a valid email";
                         } else {
                           return null;
                         }
@@ -137,9 +137,9 @@ class _InsertVolunteerState extends State<InsertVolunteer> {
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "This Field Cannot be Empty";
-                        } else if (value.length != 10) {
-                          return "NIC Must Contain 10 Digits";
+                          return "This field is required";
+                        } else if (value.length < 10) {
+                          return "Please enter a valid NIC number";
                         } else {
                           return null;
                         }
@@ -158,9 +158,9 @@ class _InsertVolunteerState extends State<InsertVolunteer> {
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "This Field Cannot be Empty";
-                        } else if (value.length != 10) {
-                          return "Phone Number Must Contain 10 Digits";
+                          return "This field is required";
+                        } else if (value.length < 10) {
+                          return "Please enter a valid phone number";
                         } else {
                           return null;
                         }
@@ -226,7 +226,7 @@ class _InsertVolunteerState extends State<InsertVolunteer> {
                       textColor: Colors.white,
                       minWidth: 300,
                       height: 40,
-                      child: const Text('Register Data'),
+                      child: const Text('Insert Data'),
                     ),
                   ],
                 ),

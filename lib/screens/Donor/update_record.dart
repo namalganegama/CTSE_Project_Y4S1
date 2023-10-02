@@ -19,6 +19,8 @@ class _UpdateRecordState extends State<UpdateRecord> {
   final emailController = TextEditingController();
   final nicController = TextEditingController();
   final phoneController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   late DatabaseReference dbRef;
 
   @override
@@ -39,8 +41,6 @@ class _UpdateRecordState extends State<UpdateRecord> {
     nicController.text = item['Donor_Nic'];
     phoneController.text = item['Donor_Phone'];
   }
-
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class _UpdateRecordState extends State<UpdateRecord> {
           child: Column(
             children: [
               const SizedBox(
-                height: 50,
+                height: 20,
               ),
               const Text(
                 'Update Donor Details',
@@ -75,14 +75,14 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: nameController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Donor Name',
+                  labelText: 'Donor Name *',
                   hintText: 'Enter Donor Name',
                 ),
                 validator: (value) {
@@ -94,14 +94,14 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: addressController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Donor Address',
+                  labelText: 'Donor Address *',
                   hintText: 'Enter Donor Address',
                 ),
                 validator: (value) {
@@ -113,70 +113,70 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Donor Email',
+                  labelText: 'Donor Email *',
                   hintText: 'Enter Donor Email',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be Empty";
+                    return "This field is required";
                   } else if (!value.contains('@')) {
-                    return "Enter a correct Email Address";
+                    return "Please enter a valid email";
                   } else {
                     return null;
                   }
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: nicController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Donor NIC',
+                  labelText: 'Donor NIC *',
                   hintText: 'Enter Donor NIC',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be Empty";
-                  } else if (value.length != 10) {
-                    return "Enter a Correct NIC Number ";
+                    return "This field is required";
+                  } else if (value.length < 10) {
+                    return "Please enter a valid NIC number";
                   } else {
                     return null;
                   }
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Donor Phone Number',
+                  labelText: 'Donor Phone Number *',
                   hintText: 'Enter Donor Phone Number',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be Empty";
-                  } else if (value.length != 10) {
-                    return "Enter a Correct Phone Number";
+                    return "This field is required";
+                  } else if (value.length < 10) {
+                    return "Please enter a valid phone number";
                   } else {
                     return null;
                   }
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               MaterialButton(
                 onPressed: () {

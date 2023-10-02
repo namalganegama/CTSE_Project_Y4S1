@@ -20,6 +20,8 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
   final emailController = TextEditingController();
   final nicController = TextEditingController();
   final phoneController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   late DatabaseReference dbRef;
 
   @override
@@ -40,8 +42,6 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
     nicController.text = item['Volunteer_Nic'];
     phoneController.text = item['Volunteer_Phone'];
   }
-
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +93,7 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "This Field Cannot be Empty";
+                            return "This field is required";
                           } else {
                             return null;
                           }
@@ -112,7 +112,7 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "This Field Cannot be Empty";
+                            return "This field is required";
                           } else {
                             return null;
                           }
@@ -131,9 +131,9 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "This Field Cannot be Empty";
+                            return "This field is required";
                           } else if (!value.contains('@')) {
-                            return "This Field Must be an Email";
+                            return "Please enter a valid email";
                           } else {
                             return null;
                           }
@@ -152,9 +152,9 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "This Field Cannot be Empty";
-                          } else if (value.length != 10) {
-                            return "NIC Must Contain 10 Digits";
+                            return "This field is required";
+                          } else if (value.length < 10) {
+                            return "Please enter a valid NIC number";
                           } else {
                             return null;
                           }
@@ -173,9 +173,9 @@ class _UpdateVolunteerState extends State<UpdateVolunteer> {
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "This Field Cannot be Empty";
-                          } else if (value.length != 10) {
-                            return "Phone Number Must Contain 10 Digits";
+                            return "This field is required";
+                          } else if (value.length < 10) {
+                            return "Please enter a valid phone number";
                           } else {
                             return null;
                           }

@@ -20,6 +20,8 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
   final dateController = TextEditingController();
   final amountController = TextEditingController();
   final descriptionController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   late DatabaseReference dbRef;
 
   @override
@@ -56,13 +58,14 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
           child: const Text('Helping Hands'),
         ),
       ),
-      body: Center(
+      body: Form(
+        key: _formKey,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               const SizedBox(
-                height: 50,
+                height: 20,
               ),
               const Text(
                 'Update Donation Details',
@@ -73,21 +76,28 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
-              TextField(
+              TextFormField(
                 controller: itemNameController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Name',
+                  labelText: 'Item Name *',
                   hintText: 'Enter Item Name',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This field is required";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
-              TextField(
+              TextFormField(
                 controller: itemTypeController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
@@ -95,35 +105,58 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
                   labelText: 'Item Type',
                   hintText: 'Enter Item Type',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This field is required";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
-              TextField(
+              TextFormField(
                 controller: dateController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Donation Date',
+                  labelText: 'Donation Date *',
                   hintText: 'Enter Donation Date',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This field is required";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
-              TextField(
+              TextFormField(
                 controller: amountController,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Item Amount',
+                  labelText: 'Item Amount *',
                   hintText: 'Enter Item Amount',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This field is required";
+                  } else if (double.parse(value) <= 0) {
+                    return "Amount should be greater than 0";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
-              TextField(
+              TextFormField(
                 controller: descriptionController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
@@ -133,7 +166,7 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               MaterialButton(
                 onPressed: () {
@@ -171,7 +204,8 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const FetchDonationData()),
+                                  builder: (context) =>
+                                      const FetchDonationData()),
                             );
                           },
                           child: const Text('Yes'),
@@ -182,7 +216,6 @@ class _UpdateDonationDataState extends State<UpdateDonationData> {
                       content: const Text('Do You Want To Update Data ?'),
                     ),
                   );
-
                 },
                 color: Colors.blue,
                 textColor: Colors.white,

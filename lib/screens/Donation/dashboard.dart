@@ -40,17 +40,16 @@ class _DonationHomePageState extends State<DonationHomePage> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: 60,
+              height: 50,
             ),
             const Image(
               width: 300,
               height: 300,
               image: NetworkImage(
                   'https://i0.wp.com/ketto.blog/wp-content/uploads/2020/10/shutterstock_1735703225-e1603424756464.jpg?fit=547%2C292&ssl=1'),
-              // image: AssetImage('dash/donation.jpg'),
             ),
             const SizedBox(
-              height: 60,
+              height: 50,
             ),
             MaterialButton(
               onPressed: () {
