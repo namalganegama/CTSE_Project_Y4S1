@@ -15,6 +15,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
   String? errorMessage = '';
+  String? successMessage = '';
   bool isLogin = true;
   bool _passwordVisible = false;
   bool isLoading = false;
@@ -47,27 +48,38 @@ class _LoginPageState extends State<LoginPage>
       setState(() {
         isLoading = true;
       });
-      if (loginAnimation == false) {
-        _controllerAnimation.forward();
-        loginAnimation = true;
-      } else {
-        _controllerAnimation.reverse();
-        loginAnimation = false;
-      }
+
       try {
         await Auth().signInWithEmailAndPassword(
           email: _controllerEmail.text,
           password: _controllerPassword.text,
         );
-        setState(() {
-          isLoading = false;
-        });
+
+        if (!(await Auth().isEmailVerified())) {
+          throw FirebaseAuthException(
+            message: 'Please verify your email before signing in.',
+            code: 'email-not-verified',
+          );
+        }
+
+        if (loginAnimation == false) {
+          _controllerAnimation.forward();
+          loginAnimation = true;
+        } else {
+          _controllerAnimation.reverse();
+          loginAnimation = false;
+        }
       } on FirebaseAuthException catch (e) {
         setState(() {
           isLoading = false;
           errorMessage = e.message;
         });
+        return;
       }
+
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -81,8 +93,13 @@ class _LoginPageState extends State<LoginPage>
           email: _controllerEmail.text,
           password: _controllerPassword.text,
         );
+
+        await Auth()
+            .sendEmailVerification(); // Sending verification email after user creation
+
         setState(() {
           isLoading = false;
+          successMessage = 'Registration successful! Please verify your email.';
         });
       } on FirebaseAuthException catch (e) {
         setState(() {
@@ -242,6 +259,12 @@ class _LoginPageState extends State<LoginPage>
     return Text(errorMessage == '' ? '' : 'Error : $errorMessage');
   }
 
+  Widget _successMessage() {
+    return Text(successMessage == null || successMessage!.isEmpty
+        ? ''
+        : 'Success : $successMessage');
+  }
+
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     clientId:
         '684143871341-9dvnce6gk60jbpinsfbh9740ni2ur2m1.apps.googleusercontent.com',
@@ -351,6 +374,7 @@ class _LoginPageState extends State<LoginPage>
                           ),
                         ],
                         _errorMessage(),
+                        _successMessage(),
                         _submitButton(),
                         _loginOrRegistrationButton(),
                         // _permissionButton(),
