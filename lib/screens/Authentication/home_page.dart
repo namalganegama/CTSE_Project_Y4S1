@@ -9,8 +9,6 @@ import 'package:project/screens/Donor/dashboard.dart';
 import 'package:project/screens/Volunteer/dashboard.dart';
 import 'package:project/screens/Authentication/jailbreak_detection.dart';
 
-import 'package:project/screens/Authentication/login_register_page.dart';
-
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
@@ -38,8 +36,6 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> signOut() async {
     await Auth().signOut();
-    // Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   Widget _title() {
@@ -63,11 +59,11 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           signOut();
         },
-        child: Icon(Icons.logout_rounded),
         backgroundColor: Colors.blue,
+        child: const Icon(Icons.logout_rounded),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: NetworkImage(
                 'https://img.freepik.com/free-vector/vibrant-summer-ombre-background-vector_53876-105765.jpg?w=360'),
@@ -87,17 +83,9 @@ class _HomePageState extends State<HomePage> {
               ),
               textAlign: TextAlign.center,
             ),
-
-            // const Image(
-            //   width: 300,
-            //   height: 300,
-            //   image: NetworkImage(
-            //       'https://image.shutterstock.com/image-photo/image-260nw-720519355.jpg'),
-            // ),
             const SizedBox(
               height: 30,
             ),
-
             CarouselSlider.builder(
                 carouselController: controller,
                 itemCount: urlImages.length,
@@ -109,27 +97,25 @@ class _HomePageState extends State<HomePage> {
                     height: 200,
                     autoPlay: true,
                     enableInfiniteScroll: true,
-                    autoPlayAnimationDuration: Duration(seconds: 2),
+                    autoPlayAnimationDuration: const Duration(seconds: 2),
                     enlargeCenterPage: true,
                     onPageChanged: (index, reason) =>
                         setState(() => activeIndex = index))),
-            SizedBox(height: 12),
-
+            const SizedBox(height: 12),
             buildIndicator(),
-            SizedBox(height: 20),
-
+            const SizedBox(height: 20),
             MaterialButton(
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => DonationHomePage()));
+                        builder: (context) => const DonationHomePage()));
               },
-              child: const Text('Donations'),
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
               height: 40,
+              child: const Text('Donations'),
             ),
             const SizedBox(
               height: 20,
@@ -141,11 +127,11 @@ class _HomePageState extends State<HomePage> {
                     MaterialPageRoute(
                         builder: (context) => const DonorHomePage()));
               },
-              child: const Text('Doner'),
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
               height: 40,
+              child: const Text('Donar'),
             ),
             const SizedBox(
               height: 20,
@@ -157,11 +143,11 @@ class _HomePageState extends State<HomePage> {
                     MaterialPageRoute(
                         builder: (context) => VolunteerHomePage()));
               },
-              child: const Text('Volunteers'),
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
               height: 40,
+              child: const Text('Volunteers'),
             ),
             const SizedBox(
               height: 20,
@@ -173,11 +159,11 @@ class _HomePageState extends State<HomePage> {
                     MaterialPageRoute(
                         builder: (context) => const BeneficaryHomePage()));
               },
-              child: const Text('Beneficiary'),
               color: Colors.blue,
               textColor: Colors.white,
               minWidth: 300,
               height: 40,
+              child: const Text('Beneficiary'),
             ),
             const SizedBox(
               height: 40,
@@ -204,7 +190,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildIndicator() => AnimatedSmoothIndicator(
         onDotClicked: animateToSlide,
-        effect: ExpandingDotsEffect(
+        effect: const ExpandingDotsEffect(
             dotWidth: 10,
             dotHeight: 8,
             activeDotColor: Color.fromARGB(255, 137, 144, 150)),
@@ -216,5 +202,5 @@ class _HomePageState extends State<HomePage> {
 }
 
 Widget buildImage(String urlImage, int index) => Container(
-    margin: EdgeInsets.symmetric(horizontal: 5),
-    child: Image.network(urlImage, fit: BoxFit.cover));
+    margin: const EdgeInsets.symmetric(horizontal: 5),
+    child: Image.asset(urlImage, fit: BoxFit.cover));

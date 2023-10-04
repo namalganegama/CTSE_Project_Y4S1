@@ -39,17 +39,16 @@ class _BeneficaryHomePageState extends State<BeneficaryHomePage> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: 60,
+              height: 50,
             ),
             const Image(
               width: 300,
               height: 300,
               image: NetworkImage(
                   'https://healthpayerintelligence.com/images/site/article_headers/_normal/GettyImages-1205508943.png'),
-              // AssetImage('dash/beneficary.jpg'),
             ),
             const SizedBox(
-              height: 60,
+              height: 50,
             ),
             MaterialButton(
               onPressed: () {

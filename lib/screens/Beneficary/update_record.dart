@@ -19,6 +19,8 @@ class _UpdateRecordState extends State<UpdateRecord> {
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
   final descriptionController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   late DatabaseReference dbRef;
 
   @override
@@ -55,13 +57,14 @@ class _UpdateRecordState extends State<UpdateRecord> {
           child: const Text('Helping Hands'),
         ),
       ),
-      body: Center(
+      body: Form(
+        key: _formKey,
         child: Padding(
           padding: EdgeInsets.all(8.0),
           child: Column(
             children: [
               const SizedBox(
-                height: 50,
+                height: 20,
               ),
               const Text(
                 'Update Beneficiary Details',
@@ -72,57 +75,89 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
-              TextField(
+              TextFormField(
                 controller: nameController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficiary Name',
+                  labelText: 'Beneficiary Name *',
                   hintText: 'Enter Beneficiary Name',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This field is required";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
-              TextField(
+              TextFormField(
                 controller: addressController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficiary Address',
+                  labelText: 'Beneficiary Address *',
                   hintText: 'Enter Beneficiary Address',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This field is required";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
-              TextField(
+              TextFormField(
                 controller: emailController,
-                keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficiary Email Address',
+                  labelText: 'Beneficiary Email Address *',
                   hintText: 'Enter Beneficiary Email Address',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This field is required";
+                  } else if (!value.contains('@')) {
+                    return "Please enter a valid email";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
-              TextField(
+              TextFormField(
                 controller: phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficiary Phone Number',
+                  labelText: 'Beneficiary Phone Number *',
                   hintText: 'Enter Beneficiary Phone Number',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "This field is required";
+                  } else if (value.length < 10) {
+                    return "Please enter a valid phone number";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
-              TextField(
+              TextFormField(
                 controller: descriptionController,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
@@ -132,7 +167,7 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               MaterialButton(
                 onPressed: () {

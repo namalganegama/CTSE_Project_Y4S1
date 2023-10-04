@@ -17,6 +17,7 @@ class _InsertDataState extends State<InsertData> {
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
   final descriptionController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   late DatabaseReference dbRef;
 
@@ -25,8 +26,6 @@ class _InsertDataState extends State<InsertData> {
     super.initState();
     dbRef = FirebaseDatabase.instance.ref().child('Beneficaries');
   }
-
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -58,83 +57,87 @@ class _InsertDataState extends State<InsertData> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: nameController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficiary Name',
+                  labelText: 'Beneficiary Name *',
                   hintText: 'Enter Beneficiary Name',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This field is required";
                   } else {
                     return null;
                   }
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: addressController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficiary Address',
+                  labelText: 'Beneficiary Address *',
                   hintText: 'Enter Beneficiary Address',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This field is required";
                   } else {
                     return null;
                   }
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: emailController,
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficiary Email Address',
+                  labelText: 'Beneficiary Email Address *',
                   hintText: 'Enter Beneficiary Email',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This field is required";
+                  } else if (!value.contains('@')) {
+                    return "Please enter a valid email";
                   } else {
                     return null;
                   }
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: phoneController,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Beneficiary Phone Number',
+                  labelText: 'Beneficiary Phone Number *',
                   hintText: 'Enter Beneficiary Phone Number',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "This Field Cannot be empty";
+                    return "This field is required";
+                  } else if (value.length < 10) {
+                    return "Please enter a valid phone number";
                   } else {
                     return null;
                   }
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               TextFormField(
                 controller: descriptionController,
@@ -146,7 +149,7 @@ class _InsertDataState extends State<InsertData> {
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               MaterialButton(
                 onPressed: () {
