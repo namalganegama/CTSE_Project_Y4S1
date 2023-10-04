@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/screens/Volunteer/update_record.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/screens/Authentication/home_page.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 
 class FetchVolunteer extends StatefulWidget {
   const FetchVolunteer({Key? key}) : super(key: key);
@@ -28,6 +29,17 @@ class _FetchVolunteerState extends State<FetchVolunteer> {
   }
 
   Widget listItem({required Map volunteer}) {
+    final key = encrypt.Key.fromUtf8('ASDFGHJKLASDFGHJ');
+    final iv = encrypt.IV.fromLength(16);
+
+    final encrypter = encrypt.Encrypter(encrypt.AES(key));
+
+    String plainText = '${volunteer['Volunteer_Nic']}';
+    final encrypted = encrypter.encrypt(plainText, iv: iv);
+    String encryptedText = encrypted.base64;
+
+    final decrypted = encrypter.decrypt(encrypted, iv: iv);
+
     return GestureDetector(
       onTap: () {
         showDialog(
@@ -77,7 +89,7 @@ class _FetchVolunteerState extends State<FetchVolunteer> {
                       height: 5,
                     ),
                     Text(
-                      'NIC: ${volunteer['Volunteer_Nic']}',
+                      'NIC: $encryptedText',
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.w400),
                     ),
@@ -153,7 +165,7 @@ class _FetchVolunteerState extends State<FetchVolunteer> {
                     height: 5,
                   ),
                   Text(
-                    'NIC: ${volunteer['Volunteer_Nic']}',
+                    'NIC: $encryptedText',
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.w400),
                   ),
